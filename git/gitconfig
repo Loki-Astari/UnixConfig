@@ -1,0 +1,10 @@
+[user]
+	name = Martin York
+	email = Martin@seomoz.org
+[github]
+	user = martin-seomoz
+	token = 8f351ac923203ceabe936d638ea23250
+[diff]
+    external = git_diff_wrapper
+[pager]
+    diff =

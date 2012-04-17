@@ -1,0 +1,107 @@
+
+call pathogen#infect()
+
+
+" Allow easy use of hidden buffers.
+" This allows you to move away from a buffer without saving
+set hidden
+
+" Turn search highlighting on
+set hlsearch
+
+" Turn on spelling
+set spell
+
+" Make sure vim detects file type
+" And uses the appropriate colour settings
+filetype    on
+syntax      on
+
+" To force vim to think a file is a particular type use
+" :set filetype=<type>
+"
+
+set tags=./tags,tags,${HOME}/Repository/tags
+
+" tabstop:          Width of tab character
+" expandtab:        When on uses space instead of tabs
+" softtabstop:      Fine tunes the amount of white space to be added
+" shiftwidth        Determines the amount of whitespace to add in normal mode
+set tabstop     =4
+set softtabstop =4
+set shiftwidth  =4
+set expandtab
+
+
+" Check if autocmd is enabled
+" :version      Now look for  +autocmd
+"
+" To find out what type of file vim thinks it is editing
+" edit the file then type ":set filetype?"
+"
+" If the filetype is Makefile then we need to use tabs
+if has("autocmd")
+
+    " Makefile are tab sensitive
+    " So do not expand tabs into space.
+    autocmd FileType make   set noexpandtab
+
+    " Set the filetype for rss and atom files to XML
+    autocmd BufNewFile,BufRead *.rss,*.atom set filetype=xml
+
+    " re-load the vimrc file when it has been changed.
+    autocmd bufwritepost .vimrc source $MYVIMRC
+endif
+
+
+
+set cindent
+set smartindent
+set autoindent
+"set cinkeys=0{,0},:,0#,!,!^F
+
+				" Map Control-] and Control-[ to do indenting
+nmap <C-S-" this to \l
+nmap <leader>l :set list!
+nmap <leader>, :w
+
+"
+" To insert Unicode characters like the ones below
+" 1) Enter Insert mode
+" 2) Enter Visual mode
+" 3) Type UNICDE character code (with u prefix)
+" Example "i<C-V>u00ca"     √ä (Should be a funny looking E)
+" Codes used below:
+"   ¬¨       u00ac
+"   ‚Ä£       u2023
+"   ‚ñ∏       u25b8
+" To get more information on what invisible characters can be mapped use :help listchars
+
+"
+" Shortcuts for file editing
+map <leader>ew :edit    <C-R>=expand("%:p:h") . "/"
+map <leader>es :split   <C-R>=expand("%:p:h") . "/"
+map <leader>ev :vsplit  <C-R>=expand("%:p:h") . "/"
+map <leader>et :tabe    <C-R>=expand("%:p:h") . "/"
+
+" Set the highlighting for
+"   Search
+highlight Search    ctermfg=3   ctermbg=NONE    cterm=NONE
+"   Matched parenthesis
+highlight clear MatchParen
+highlight MatchParen ctermfg=1  ctermbg=NONE    cterm=NONE
+
+highlight SpellBad ctermfg=1   ctermbg=NONE    cterm=underline
+highlight SpellCap ctermfg=2   ctermbg=NONE    cterm=underline 
+
+
+"set background=dark
+"let g:solarized_termtrans=1
+"let g:solarized_termcolors=256
+"let g:solarized_contrast="high"
+"let g:solarized_visibility="high"
+"colorscheme solarized
+
+
+
+
