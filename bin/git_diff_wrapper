@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo "Hi: $0"
+
+vimdiff "$2" "$5"
+
