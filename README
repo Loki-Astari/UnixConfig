@@ -5,6 +5,7 @@ Setup simple UNIX configuration files in source control
 
     Add symbolic Links
         ln -s ~/.config/vim/vimrc       ~/.vimrc
+        ln -s ~/.config/vim/vim         ~/.vim
         ln -s ~/.config/git/gitconfig   ~/.gitconfig
         ln -s ~/.config/bash/profile    ~/.profile
         ln -s ~/.config/bin             ~/bin
