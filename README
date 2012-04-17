@@ -1,0 +1,11 @@
+Setup simple UNIX configuration files in source control
+
+    Install with: 
+        git clone git@github.com:Loki-Astari/UnixConfig.git ~/.config
+
+    Add symbolic Links
+        ln -s ~/.config/vim/vimrc       ~/.vimrc
+        ln -s ~/.config/git/gitconfig   ~/.gitconfig
+        ln -s ~/.config/bash/profile    ~/.profile
+        ln -s ~/.config/bin             ~/bin
+
