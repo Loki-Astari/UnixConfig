@@ -12,5 +12,6 @@ Setup simple UNIX configuration files in source control
         ln -s ~/.config/vim/vim         ~/.vim
         ln -s ~/.config/git/gitconfig   ~/.gitconfig
         ln -s ~/.config/shell/profile   ~/.profile
+        ln -s ~/.config/shell/tcshrc    ~/.tcshrc
         ln -s ~/.config/bin             ~/bin
 

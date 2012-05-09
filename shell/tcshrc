@@ -1,0 +1,23 @@
+
+alias vi vim
+alias sync "sudo ntpdate pool.ntp.org"
+alias netsync "sudo /etc/init.d/networking restart"
+
+set autolist
+setenv CLICOLOR
+
+setenv  EC2_HOME                    /usr/local/ec2-api-tools
+setenv  AWS_ELB_HOME                /usr/local/ElasticLoadBalancing
+setenv  JAVA_HOME                   /usr/lib/jvm/java-6-sun
+
+
+setenv  AMAZON_ACCESS_KEY_ID        "1RSCW61314TXCXGDJG82"
+setenv  AMAZON_SECRET_ACCESS_KEY    "MbB1fr3aSeA/EzwLzZ8gbjAOHuffcF+JfuELckv5"
+setenv  EC2_CERT                    "${HOME}/.ssh/EC2_CERT"
+setenv  EC2_PRIVATE_KEY             "${HOME}/.ssh/EC2_PRIVATE_KEY"
+setenv  LINKSCAPE_KEY               "${HOME}/.ssh/LINKSCAPE_KEY"
+
+
+setenv  PATH                        "${PATH}:${EC2_HOME}/bin:${AWS_ELB_HOME}/bin"
+setenv  PATH                        "${HOME}/bin:${PATH}"
+
