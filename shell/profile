@@ -22,5 +22,8 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 alias vi=vim
+alias sync="sudo ntpdate pool.ntp.org"
+alias netsync="sudo /etc/init.d/networking restart"
+
 
 
