@@ -1,6 +1,8 @@
 
 call pathogen#infect()
 
+set number
+
 
 " Allow easy use of hidden buffers.
 " This allows you to move away from a buffer without saving
