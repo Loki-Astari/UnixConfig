@@ -51,6 +51,9 @@ if has("autocmd")
 
     " re-load the vimrc file when it has been changed.
     autocmd bufwritepost .vimrc source $MYVIMRC
+
+    autocmd BufNewFile,BufRead *.tpp set filetype=cpp
+
 endif
 
 
