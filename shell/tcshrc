@@ -4,8 +4,6 @@ alias sync "sudo ntpdate pool.ntp.org"
 alias netsync "sudo /etc/init.d/networking restart"
 
 set autolist
-setenv CLICOLOR
-
 setenv  EC2_HOME                    /usr/local/ec2-api-tools
 setenv  AWS_ELB_HOME                /usr/local/ElasticLoadBalancing
 setenv  JAVA_HOME                   /usr/lib/jvm/java-6-sun
