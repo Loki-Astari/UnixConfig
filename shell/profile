@@ -26,4 +26,7 @@ alias sync="sudo ntpdate pool.ntp.org"
 alias netsync="sudo /etc/init.d/networking restart"
 
 
+cd ~/.config
+git pull
+cd ${HOME}
 
