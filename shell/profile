@@ -24,6 +24,9 @@ fi
 alias vi=vim
 alias sync="sudo ntpdate pool.ntp.org"
 alias netsync="sudo /etc/init.d/networking restart"
+alias version="lsb_release -a"
+
+LD_LIBRARY_PATH=~/Clean/Cloud/build/lib
 
 
 cd ~/.config
