@@ -32,8 +32,10 @@ export PATH="${PATH}:/mnt/cluster/bh/Cloud/build/bin"
 export EC2_CERT=~/.ssh/EC2_CERT
 export EC2_PRIVATE_KEY=~/.ssh/EC2_PRIVATE_KEY
 export LINKSCAPE_KEY=~/.ssh/NewLinkKeys
-export AMAZON_ACCESS_KEY_ID=`head -n 1 ~/.ssh/AMAZON_ACCESS`
-export AMAZON_SECRET_ACCESS_KEY=`tail -n 1 ~/.ssh/AMAZON_ACCESS`
+if [[ -e ~/.ssh/AMAZON_ACCESS ]]; then
+    export AMAZON_ACCESS_KEY_ID=`head -n 1 ~/.ssh/AMAZON_ACCESS`
+    export AMAZON_SECRET_ACCESS_KEY=`tail -n 1 ~/.ssh/AMAZON_ACCESS`
+fi
 
 cd ~/.config
 git pull
