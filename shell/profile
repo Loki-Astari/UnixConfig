@@ -26,10 +26,15 @@ alias sync="sudo ntpdate pool.ntp.org"
 alias netsync="sudo /etc/init.d/networking restart"
 alias version="lsb_release -a"
 
-LD_LIBRARY_PATH=~/Clean/Cloud/build/lib
+export LD_LIBRARY_PATH=~/Clean/Cloud/build/lib:/mnt/cluster/bh/Cloud/build/lib
+export PATH="${PATH}:/mnt/cluster/bh/Cloud/build/bin"
 
 
 cd ~/.config
 git pull
 cd ${HOME}
+
+if [[ -e .profile.old ]]; then
+    source  .profile.old
+fi
 
