@@ -6,17 +6,17 @@ I used to keep these files in a zip file on my server. So when I started a new j
 
 This assumes you have vim pathagin installed:
 
-    In one line: ( read below for what is on this line)
+In one line: ( read below for what is on this line)
 
         cd;git clone git@github.com:Loki-Astari/UnixConfig.git ~/.config;cd .config;git submodule init;git submodule update;./init;cd
 
-    Pathagin install instructions:
+Pathagin install instructions:
 
         mkdir -p ~/.vim/autoload ~/.vim/bundle; \
         curl -so ~/.vim/autoload/pathogen.vim \
         https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
 
-    Install with: 
+Install with: 
 
         cd
         git clone git@github.com:Loki-Astari/UnixConfig.git ~/.config
@@ -24,7 +24,7 @@ This assumes you have vim pathagin installed:
         git submodule init
         git submodule update
 
-    Add symbolic Links
+Add symbolic Links
 
         ln -s ~/.config/vim/vimrc       ~/.vimrc
         ln -s ~/.config/vim/vim         ~/.vim
