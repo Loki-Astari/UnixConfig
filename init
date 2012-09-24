@@ -1,0 +1,11 @@
+ln -s ~/.config/vim/vimrc ~/.vimrc
+ln -s ~/.config/vim/vim ~/.vim
+ln -s ~/.config/git/gitconfig ~/.gitconfig
+
+if [[ -e ~/.profile ]]; then
+    mv ~/.profile ~/.profile.old
+fi
+
+ln -s ~/.config/shell/profile ~/.profile
+ln -s ~/.config/shell/tcshrc ~/.tcshrc
+ln -s ~/.config/bin ~/bin
