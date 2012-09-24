@@ -1,4 +1,6 @@
 
+set scrolloff=15
+
 call pathogen#infect()
 
 set number

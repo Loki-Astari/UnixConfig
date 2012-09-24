@@ -29,7 +29,6 @@ alias version="lsb_release -a"
 export LD_LIBRARY_PATH=~/Clean/Cloud/build/lib:/mnt/cluster/bh/Cloud/build/lib
 export PATH="${PATH}:/mnt/cluster/bh/Cloud/build/bin"
 
-export EC2_HOME=~/.ec2
 export PATH=${PATH}:${EC2_HOME}/bin
 if [[ "`uname -s`" == "Darwin" ]]; then
     export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home/
@@ -52,4 +51,15 @@ cd ${HOME}
 if [[ -e .profile.old ]]; then
     source  .profile.old
 fi
+
+export EC2_CERT=~/.ssh/EC2_CERT 
+export EC2_PRIVATE_KEY=~/.ssh/EC2_PRIVATE_KEY 
+export LINKSCAPE_KEY=~/.ssh/NewLinkKeys 
+export AMAZON_ACCESS_KEY_ID=`head -n 1 ~/.ssh/AMAZON_ACCESS `
+export AMAZON_SECRET_ACCESS_KEY=`tail -n 1 ~/.ssh/AMAZON_ACCESS `
+
+export JAVA_HOME="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/MacOS/itms/java/"
+export EC2_HOME=~/.ec2
+export PATH=$PATH:$EC2_HOME/bin
+
 
