@@ -26,7 +26,3 @@ This assumes you have vim pathagin installed:
         ln -s ~/.config/shell/profile   ~/.profile
         ln -s ~/.config/shell/tcshrc    ~/.tcshrc
         ln -s ~/.config/bin             ~/bin
-
-    In one line:
-        cd;git clone git@github.com:Loki-Astari/UnixConfig.git ~/.config;cd .config;git submodule init;git submodule update;./init;cd
-
