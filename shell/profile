@@ -37,13 +37,16 @@ else
     export JAVA_HOME=/usr
 fi
 
-export EC2_CERT=~/.ssh/EC2_CERT
-export EC2_PRIVATE_KEY=~/.ssh/EC2_PRIVATE_KEY
-export LINKSCAPE_KEY=~/.ssh/NewLinkKeys
-if [[ -e ~/.ssh/AMAZON_ACCESS ]]; then
-    export AMAZON_ACCESS_KEY_ID=`head -n 1 ~/.ssh/AMAZON_ACCESS`
-    export AMAZON_SECRET_ACCESS_KEY=`tail -n 1 ~/.ssh/AMAZON_ACCESS`
-fi
+export JAVA_HOME="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/MacOS/itms/java/"
+export EC2_HOME=~/.ec2
+export PATH=$PATH:$EC2_HOME/bin
+
+export MOZSCAPE_KEY="$HOME/.ssh/bigdata-20120905.pem"
+export EC2_CERT="$EC2_HOME/credentials/mozscape/cert-QWXBXD-bigdata-20120905.pem"
+export EC2_PRIVATE_KEY="$EC2_HOME/credentials/mozscape/pk-QWXBXD-bigdata-20120905.pem"
+export AMAZON_ACCESS_KEY_ID=`head -1 $EC2_HOME/credentials/mozscape/s3_credentials_bigdata-20120905`
+export AMAZON_SECRET_ACCESS_KEY=`tail -1 $EC2_HOME/credentials/mozscape/s3_credentials_bigdata-20120905`
+
 
 cd ~/.config
 git pull
@@ -53,14 +56,5 @@ if [[ -e .profile.old ]]; then
     source  .profile.old
 fi
 
-export EC2_CERT=~/.ssh/EC2_CERT 
-export EC2_PRIVATE_KEY=~/.ssh/EC2_PRIVATE_KEY 
-export LINKSCAPE_KEY=~/.ssh/NewLinkKeys 
-export AMAZON_ACCESS_KEY_ID=`head -n 1 ~/.ssh/AMAZON_ACCESS `
-export AMAZON_SECRET_ACCESS_KEY=`tail -n 1 ~/.ssh/AMAZON_ACCESS `
-
-export JAVA_HOME="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/MacOS/itms/java/"
-export EC2_HOME=~/.ec2
-export PATH=$PATH:$EC2_HOME/bin
 
 
