@@ -8,7 +8,7 @@ This assumes you have vim pathagin installed:
 
 In one line: ( read below for what is on this line)
 
-        cd;git clone git@github.com:Loki-Astari/UnixConfig.git ~/.config;cd .config;git submodule init;git submodule update;./init;cd
+        cd;git clone git@github.com:Loki-Astari/UnixConfig.git ~/.config;cd .config;git submodule init;git submodule update;chmod +x init;./init;cd
 
 Pathagin install instructions:
 
