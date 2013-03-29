@@ -20,6 +20,7 @@ alias gd="git difftool --no-prompt --tool=vimdiff"
 alias sync="sudo ntpdate pool.ntp.org"
 alias netsync="sudo /etc/init.d/networking restart"
 alias version="lsb_release -a"
+alias sync="sudo date +%Y-%m-%dT%H:%M:%S%Z --set=`curl http://www.timeapi.org/pdt/now`"
 
 export LD_LIBRARY_PATH=~/Clean/Cloud/build/lib:/mnt/cluster/bh/Cloud/build/lib
 export PATH="${PATH}:/mnt/cluster/bh/Cloud/build/bin"
