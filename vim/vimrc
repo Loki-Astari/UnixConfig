@@ -5,6 +5,10 @@ call pathogen#infect()
 
 set number
 
+if &diff
+    highlight! link DiffText MatchParen
+endif
+
 
 " Allow easy use of hidden buffers.
 " This allows you to move away from a buffer without saving
