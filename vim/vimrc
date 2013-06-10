@@ -29,7 +29,7 @@ syntax      on
 " :set filetype=<type>
 "
 
-set tags=./tags,./../tags,tags,${HOME}/Repository/tags,/mnt/cluster/bh/src/tags/
+set tags=./tags,./../tags,./../../tags,tags,${HOME}/Repository/tags,/mnt/cluster/bh/src/tags/
 
 " tabstop:          Width of tab character
 " expandtab:        When on uses space instead of tabs
