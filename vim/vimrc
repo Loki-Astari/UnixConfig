@@ -29,7 +29,7 @@ syntax      on
 " :set filetype=<type>
 "
 
-set tags=./tags,tags,${HOME}/Repository/linkscape/tags,/mnt/cluster/bh/src/tags/,${HOME}/Repository/Cloud,/mnt/cluster/bh/Cloud/tags
+set tags=./tags,./../tags,./../../tags,tags,${HOME}/Repository/tags,/mnt/cluster/bh/src/tags/
 
 " tabstop:          Width of tab character
 " expandtab:        When on uses space instead of tabs
@@ -112,6 +112,7 @@ highlight SpellCap ctermfg=2   ctermbg=NONE    cterm=underline
 "let g:solarized_contrast="high"
 "let g:solarized_visibility="high"
 "colorscheme solarized
+
 
 
 
