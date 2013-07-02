@@ -41,8 +41,11 @@ export PATH=$PATH:$EC2_HOME/bin
 export MOZSCAPE_KEY="$HOME/.ssh/bigdata-20120905.pem"
 export EC2_CERT="$EC2_HOME/credentials/mozscape/cert-QWXBXD-bigdata-20120905.pem"
 export EC2_PRIVATE_KEY="$EC2_HOME/credentials/mozscape/pk-QWXBXD-bigdata-20120905.pem"
-export AMAZON_ACCESS_KEY_ID=`head -1 $EC2_HOME/credentials/mozscape/s3_credentials_bigdata-20120905`
-export AMAZON_SECRET_ACCESS_KEY=`tail -1 $EC2_HOME/credentials/mozscape/s3_credentials_bigdata-20120905`
+
+if [[ -f $EC2_HOME/credentials/mozscape/s3_credentials_bigdata-20120905 ]]; then
+    export AMAZON_ACCESS_KEY_ID=`head -1 $EC2_HOME/credentials/mozscape/s3_credentials_bigdata-20120905`
+    export AMAZON_SECRET_ACCESS_KEY=`tail -1 $EC2_HOME/credentials/mozscape/s3_credentials_bigdata-20120905`
+fi
 
 #export EC2_PRIVATE_KEY="$HOME/.ec2/pk-*.pem"
 #export EC2_CERT="$HOME/.ec2/cert-*.pem"
