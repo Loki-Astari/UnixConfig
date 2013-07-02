@@ -30,14 +30,11 @@ export PATH="${PATH}:/mnt/cluster/bh/Cloud/build/bin"
 
 export PATH=${PATH}:${EC2_HOME}/bin
 if [[ "`uname -s`" == "Darwin" ]]; then
-#    export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
-    echo "HI"
+    export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
 else
-#    export JAVA_HOME=/usr
-    echo "BYE"
+    export JAVA_HOME=/usr
 fi
 
-export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
 export EC2_HOME=~/.ec2
 export PATH=$PATH:$EC2_HOME/bin
 
