@@ -41,8 +41,8 @@ export PATH=$PATH:$EC2_HOME/bin
 export MOZSCAPE_KEY="$EC2_HOME/credentials/bigdata-keys/bigdata-20130729.pem"
 export EC2_CERT="$EC2_HOME/credentials/bigdata-keys/cert-QY5WIK5STPMZEJV4AMJI6UBMLKEYDICE.pem"
 export EC2_PRIVATE_KEY="$EC2_HOME/credentials/bigdata-keys/pk-QY5WIK5STPMZEJV4AMJI6UBMLKEYDICE.pem"
-export AMAZON_ACCESS_KEY_ID="AKIAJQB3GNGJXYXRAOBA"
-export AMAZON_SECRET_ACCESS_KEY="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"
+export AMAZON_ACCESS_KEY_ID="head -1 $EC2_HOME/credentials/bigdata-keys/AMZON"
+export AMAZON_SECRET_ACCESS_KEY="tail -1 $EC2_HOME/credentials/bigdata-keys/AMZON"
 
 cd ~/.config
 git pull
