@@ -42,8 +42,10 @@ export PATH=${PATH}:${EC2_HOME}/bin
 export MOZSCAPE_KEY="$EC2_HOME/credentials/bigdata-keys/bigdata-20130729.pem"
 export EC2_CERT="$EC2_HOME/credentials/bigdata-keys/cert-QY5WIK5STPMZEJV4AMJI6UBMLKEYDICE.pem"
 export EC2_PRIVATE_KEY="$EC2_HOME/credentials/bigdata-keys/pk-QY5WIK5STPMZEJV4AMJI6UBMLKEYDICE.pem"
-export AMAZON_ACCESS_KEY_ID=`head -1 ~/.s3exec_cfg`
-export AMAZON_SECRET_ACCESS_KEY=`tail -1 ~/.s3exec_cfg`
+if [[ -e ~/.s3exec_cfg ]]; then
+    export AMAZON_ACCESS_KEY_ID=`head -1 ~/.s3exec_cfg`
+    export AMAZON_SECRET_ACCESS_KEY=`tail -1 ~/.s3exec_cfg`
+fi
 
 cd ~/.config
 git pull
