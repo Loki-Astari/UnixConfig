@@ -21,7 +21,7 @@ alias gd="git difftool --no-prompt --tool=vimdiff"
 alias sync="sudo ntpdate pool.ntp.org"
 alias netsync="sudo /etc/init.d/networking restart"
 alias version="lsb_release -a"
-alias sync="sudo date +%Y-%m-%dT%H:%M:%S%Z --set=`curl http://www.timeapi.org/pdt/now`"
+alias sync='sudo date +%Y-%m-%dT%H:%M:%S%Z --set=`curl http://www.timeapi.org/pdt/now`'
 alias ctags="ctags --langmap=ObjectiveC:.mm.h"
 alias hd="od -t x1 -t c"
 
@@ -30,30 +30,30 @@ export PATH="${PATH}:/mnt/cluster/bh/Cloud/build/bin"
 
 export PATH=${PATH}:${EC2_HOME}/bin
 if [[ "`uname -s`" == "Darwin" ]]; then
-    export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+    export JAVA_HOME='/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/MacOS/itms/java'
 else
     export JAVA_HOME=/usr
 fi
 
 export EC2_HOME=~/.ec2
-export PATH=$PATH:$EC2_HOME/bin
+export PATH=${PATH}:${EC2_HOME}/bin
 
 export MOZSCAPE_KEY="$EC2_HOME/credentials/bigdata-keys/bigdata-20130729.pem"
 export EC2_CERT="$EC2_HOME/credentials/bigdata-keys/cert-QY5WIK5STPMZEJV4AMJI6UBMLKEYDICE.pem"
 export EC2_PRIVATE_KEY="$EC2_HOME/credentials/bigdata-keys/pk-QY5WIK5STPMZEJV4AMJI6UBMLKEYDICE.pem"
-export AMAZON_ACCESS_KEY_ID="head -1 $EC2_HOME/credentials/bigdata-keys/AMZON"
-export AMAZON_SECRET_ACCESS_KEY="tail -1 $EC2_HOME/credentials/bigdata-keys/AMZON"
+export AMAZON_ACCESS_KEY_ID=`head -1 ~/.s3exec_cfg`
+export AMAZON_SECRET_ACCESS_KEY=`tail -1 ~/.s3exec_cfg`
 
 cd ~/.config
 git pull
 cd ${HOME}
 
-if [[ -e .profile.old ]]; then
-    source  .profile.old
+if [[ -e .mozkey ]]; then
+    export access_id=`head -1 .mozKey`
+    export secret_key=`tail -1 .mozKey`
 fi
-
-alias sosetup="git cherry-pick f7684937e11c77c799cdcd56820a15c5c98c89bf"
-
-export access_id="moz-dev"
-export secret_key="acf7a2be8e4c1cc51b177bf62152dda2"
+if [[ -e .lsapi ]]; then
+    AUTHDB_USER=`head -1 .lsapi`
+    AUTHDB_PW=`tail -1 .lsapi`
+fi
 
