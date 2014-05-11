@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "Hi: $0"
+echo "Checking: $2 $5"
 
 vimdiff "$2" "$5"
 
