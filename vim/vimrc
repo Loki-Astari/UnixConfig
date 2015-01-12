@@ -10,7 +10,7 @@ if &diff
 endif
 
 
-" Allow easy use of hidden buffers.
+" allow easy use of hidden buffers.
 " This allows you to move away from a buffer without saving
 set hidden
 
@@ -29,7 +29,7 @@ syntax      on
 " :set filetype=<type>
 "
 
-set tags=./tags,./../tags,./../../tags,tags,${HOME}/Repository/tags,/mnt/cluster/bh/src/tags/
+set tags=./../tags,./tags,${HOME}/Repository/tags,/mnt/cluster/bh/src/tags/
 
 " tabstop:          Width of tab character
 " expandtab:        When on uses space instead of tabs
@@ -114,6 +114,59 @@ highlight SpellCap ctermfg=2   ctermbg=NONE    cterm=underline
 "colorscheme solarized
 
 
+nnoremap <C-H> :Hexmode<CR>
+inoremap <C-H> <Esc>:Hexmode<CR>
+vnoremap <C-H> :<C-U>Hexmode<CR>
 
+" ex command for toggling hex mode - define mapping if desired
+command -bar Hexmode call ToggleHex()
 
+" helper function to toggle hex mode
+function ToggleHex()
+  " hex mode should be considered a read-only operation
+  " save values for modified and read-only for restoration later,
+  " and clear the read-only flag for now
+  let l:modified=&mod
+  let l:oldreadonly=&readonly
+  let &readonly=0
+  let l:oldmodifiable=&modifiable
+  let &modifiable=1
+  if !exists("b:editHex") || !b:editHex
+    " save old options
+    let b:oldft=&ft
+    let b:oldbin=&bin
+    " set new options
+    setlocal binary " make sure it overrides any textwidth, etc.
+    let &ft="xxd"
+    " set status
+    let b:editHex=1
+    " switch to hex editor
+    %!xxd
+  else
+    " restore old options
+    let &ft=b:oldft
+    if !b:oldbin
+      setlocal nobinary
+    endif
+    " set status
+    let b:editHex=0
+    " return to normal editing
+    %!xxd -r
+  endif
+  " restore values for modified and read only state
+  let &mod=l:modified
+  let &readonly=l:oldreadonly
+  let &modifiable=l:oldmodifiable
+endfunction
 
+" vim -b : edit binary using xxd-format!
+augroup Binary
+  au!
+  au BufReadPre  *.bin let &bin=1
+  au BufReadPost *.bin if &bin | %!xxd
+  au BufReadPost *.bin set ft=xxd | endif
+  au BufWritePre *.bin if &bin | %!xxd -r
+  au BufWritePre *.bin endif
+  au BufWritePost *.bin if &bin | %!xxd
+  au BufWritePost *.bin set nomod | endif
+augroup END
