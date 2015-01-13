@@ -17,6 +17,10 @@ set listchars=eol:¬,tab:▸\
 " Show invisible characters by default
 set list
 
+" Turn on the ruler
+" Print locator on the command line
+set ruler
+
 
 execute pathogen#infect()
 

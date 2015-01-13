@@ -20,6 +20,5 @@
 	trustExitCode = true
 [branch]
     autosetuprebase = always
-
 [push]
 	default = matching
