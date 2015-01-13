@@ -1,8 +1,35 @@
+"
+" To insert Unicode characters like the ones below
+" 1) Enter Insert mode
+" 2) Enter Visual mode
+" 3) Type UNICDE character code (with u prefix)
+" Example "i<C-V>u00ca"     Ê (Should be a funny looking E)
+" Codes used below:
+"   ¬       u00ac
+"   ‣       u2023
+"   ▸       u25b8
+" To get more information on what invisible characters can be mapped use :help listchars
 
+" Set what invisible characters looks like
+
+set listchars=eol:¬,tab:▸\ 
+" Set the colour of newline and tab so they are not so obvious
+" Show invisible characters by default
+set list
+
+" Turn on the ruler
+" Print locator on the command line
+set ruler
+
+
+execute pathogen#infect()
+
+" When scrolling up and down.
+" Keep a buffer of 15 lines top and bottom so the cursor does not
+" go all the way to the top of the window
 set scrolloff=15
 
-call pathogen#infect()
-
+" Turn on line numbers
 set number
 
 if &diff
@@ -19,6 +46,10 @@ set hlsearch
 
 " Turn on spelling
 set spell
+
+" Paste for clipboard exactly as show,
+" i.e. don't apply tab rules after new lines etc.
+set paste
 
 " Make sure vim detects file type
 " And uses the appropriate colour settings
@@ -71,23 +102,9 @@ set smartindent
 set autoindent
 "set cinkeys=0{,0},:,0#,!,!^F
 
-				" Map Control-] and Control-[ to do indenting
 nmap <C-S-" this to \l
 nmap <leader>l :set list!
 nmap <leader>, :w
-
-"
-" To insert Unicode characters like the ones below
-" 1) Enter Insert mode
-" 2) Enter Visual mode
-" 3) Type UNICDE character code (with u prefix)
-" Example "i<C-V>u00ca"     √ä (Should be a funny looking E)
-" Codes used below:
-"   ¬¨       u00ac
-"   ‚Ä£       u2023
-"   ‚ñ∏       u25b8
-" To get more information on what invisible characters can be mapped use :help listchars
-
 "
 " Shortcuts for file editing
 map <leader>ew :edit    <C-R>=expand("%:p:h") . "/"
@@ -95,16 +112,33 @@ map <leader>es :split   <C-R>=expand("%:p:h") . "/"
 map <leader>ev :vsplit  <C-R>=expand("%:p:h") . "/"
 map <leader>et :tabe    <C-R>=expand("%:p:h") . "/"
 
+" Bubble text with the normal movement keys.
+" This works for single lines in normal mode.
+" Or multiple lines in visual mode
+nmap <C-k>      [e
+nmap <C-j>      ]e
+vmap <C-j>      ]egv
+vmap <C-k>      [egv
+
+" Ctrol-A Will align the /= sign on all lines in selection
+nmap <C-A>      :Tabularize /=
+
+" Toggle the history window to see all the old states.
+nmap <F5>      :GundoToggle
+
 " Set the highlighting for
 "   Search
-highlight Search    ctermfg=3   ctermbg=NONE    cterm=NONE
+highlight Search        ctermfg=3   ctermbg=NONE    cterm=NONE
 "   Matched parenthesis
 highlight clear MatchParen
-highlight MatchParen ctermfg=1  ctermbg=NONE    cterm=NONE
+highlight MatchParen    ctermfg=1   ctermbg=NONE    cterm=NONE
 
-highlight SpellBad ctermfg=1   ctermbg=NONE    cterm=underline
-highlight SpellCap ctermfg=2   ctermbg=NONE    cterm=underline 
+highlight SpellBad      ctermfg=1   ctermbg=NONE    cterm=underline
+highlight SpellCap      ctermfg=2   ctermbg=NONE    cterm=underline
 
+" Color of special characters EOL and tab
+highlight NonText       ctermfg=8
+highlight SpecialKey    ctermfg=8
 
 "set background=dark
 "let g:solarized_termtrans=1
@@ -112,7 +146,6 @@ highlight SpellCap ctermfg=2   ctermbg=NONE    cterm=underline
 "let g:solarized_contrast="high"
 "let g:solarized_visibility="high"
 "colorscheme solarized
-
 
 
 
