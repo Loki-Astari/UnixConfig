@@ -1,0 +1,145 @@
+
+Motion:         jkhl        up/down/right/left
+                0           Beginning of line
+                ^           First non white character on line
+                $           End of line
+                *           Move forward to the word under cursor
+                #           Move backward to the word under the cursor
+                /<expr><cr> Search forward for expression   (\c cast insensitive)
+                ?<expr><cr> Search backwards for expression
+                f<char>     Move forward to next char
+                F<char>     Move backward to prev char
+                t<char>     Move forward to next char (stop 1 short)
+                T<char>     Move backward to prev char (stop 1 short)
+                w           forward word
+                b           back word
+                ip          paragraph
+                '[          beginning of last yanked text
+                ']          end of last yanked text
+                ]]          Next Opening brace on row 0 '{'
+                [[          Prev Opening brace on row 0 '{'
+                [{          Enclosing open brace '{'
+                ]}          Enclosing close brace '}'
+Motion used in command only:
+                a<type>     Ambiant     
+                i<type>     Inner
+                    type:   w   ->  word
+                            s   ->  sentence
+                            p   ->  paragraph
+                            {   ->  block inside '{}'
+                            (   ->  block inside '()'
+                            <   ->  block inside '<>'
+                            '   ->  block inside quotes
+                            "   ->  block inside quotes
+                            t   ->  tag block (html)
+
+<Ctrl-V>        Visual Block Selection Mode
+<Shift-V>       Visual Line  Selection Mode
+v               Visual Selection Mode
+                o           opposite end
+                c           xut
+                ip          Select paragraph.
+                            In code this is the enclosing brace
+
+
+
+i               insert
+a               append
+c<motion>       change
+d<motion>       delete
+y<motion>       yank text from register
+p               pull text (insert) from register
+s               substitute (delete then insert)     synonym:    cl
+o               append on next (new) line:          synonym:    $a<cr>
+
+
+I               insert from beginning of line       synonym ^i
+A               append from end of line             synonym $a
+D               delete to end of line               synonym d$
+Y               yank line
+P               pull text (append) from register
+C               change rest of line                 synonym d$a
+S               change line:                        synonym ^C
+Y               yank to end of line                 synonym y$
+
+
+:e      <filename>      open filename in buffer 
+:sp    [<filename>]     open filename in buffer split window
+:vsp   [<filename>]     open filename in buffer vertical split window
+:tabe  [<filename>]     open filename in new tab
+
+:e.                     open explorer
+:sp.                    open explorer in split window
+:vsp.                   open explorer in vertical split window
+:tabe.                  open explorer in new tab
+
+:tabc                   tab close
+:tabn                   tab next
+:tabp                   tab prev
+
+:r      <filename>      read a file in place.
+
+g,                      move to previous edit
+g;                      move to next edit
+g[jklh0$^]              like [jklh$^0] but move on visible lines
+gi                      move to last edit and move into insert mode
+
+
+q<register><commands>q  saves commands into <register>
+@<register>             replay commands in <register>
+@@                      replay the last replayed command
+
+Search Expr
+    .                   Any character
+    ^                   beginning of line
+    \s                  white space
+    \d                  number
+    *                   zero or more of previous character
+
+m<register>             Save a location into a mark register
+'<register>             move to mark register line (not line not location)
+`<register>             move to the exact mark
+'.                      move to line of last edit
+`.                      move to exact point of last edit
+
+:marks                  show list of mark registers
+:reg                    shows what are in the registers
+
+"<register>             Saves next commands affected text into register
+                        A lower case register copies into register.
+                        An upper case register appends into register
+
+:Git  <command>   Execute normal git command
+:Gwrite             git add      <current file>
+:Gread              git checkout <current file>
+:Gremove            git rm       <current file>
+:Gmove <dst>        git mv       <current file> dst
+:Gcommit            git commit  (adds window for commit message allowing auto complete to work)
+:Gblame             git blame   (adds window for committer messages that scrolls with source)
+:Gdiff              runs vimdiff against the repository
+:Gstatus            git status
+                    -       (minus key)   will add/refresh files 
+                    <enter> Loads file into view window below commit window
+
+VIM Diff
+dp                  diff put            (push changes to other file)
+do                  diff obtain         (Pull (obtain) changes from other file)
+dg                  diff get            Same as do
+]c                  Move to Next change
+[c                  Move to Prev change
+:diffupdate         Rerun the diff colouring
+
+If in Visual mode only the selected lines are pulled.
+
+z=                  Check Spelling
+
+Folding:
+
+zo                  Open fold
+zc                  Close fold
+zR                  Open all folds
+zM                  Close all folds
+zj                  Move to next fold
+zk                  Move to prev fold
+
+

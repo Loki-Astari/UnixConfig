@@ -1,8 +1,35 @@
+"
+" To insert Unicode characters like the ones below
+" 1) Enter Insert mode
+" 2) Enter Visual mode
+" 3) Type UNICDE character code (with u prefix)
+" Example "i<C-V>u00ca"     Ê (Should be a funny looking E)
+" Codes used below:
+"   ¬       u00ac
+"   ‣       u2023
+"   ▸       u25b8
+" To get more information on what invisible characters can be mapped use :help listchars
 
+" Set what invisible characters looks like
+
+set listchars=eol:¬,tab:▸\ 
+" Set the colour of newline and tab so they are not so obvious
+" Show invisible characters by default
+set list
+
+" Turn on the ruler
+" Print locator on the command line
+set ruler
+
+
+execute pathogen#infect()
+
+" When scrolling up and down.
+" Keep a buffer of 15 lines top and bottom so the cursor does not
+" go all the way to the top of the window
 set scrolloff=15
 
-call pathogen#infect()
-
+" Turn on line numbers
 set number
 
 if &diff
@@ -10,7 +37,7 @@ if &diff
 endif
 
 
-" Allow easy use of hidden buffers.
+" allow easy use of hidden buffers.
 " This allows you to move away from a buffer without saving
 set hidden
 
@@ -19,6 +46,10 @@ set hlsearch
 
 " Turn on spelling
 set spell
+
+" Paste for clipboard exactly as show,
+" i.e. don't apply tab rules after new lines etc.
+set paste
 
 " Make sure vim detects file type
 " And uses the appropriate colour settings
@@ -29,7 +60,7 @@ syntax      on
 " :set filetype=<type>
 "
 
-set tags=./tags,./../tags,./../../tags,tags,${HOME}/Repository/tags,/mnt/cluster/bh/src/tags/
+set tags=./../tags,./tags,${HOME}/Repository/tags,/mnt/cluster/bh/src/tags/
 
 " tabstop:          Width of tab character
 " expandtab:        When on uses space instead of tabs
@@ -71,23 +102,9 @@ set smartindent
 set autoindent
 "set cinkeys=0{,0},:,0#,!,!^F
 
-				" Map Control-] and Control-[ to do indenting
 nmap <C-S-" this to \l
 nmap <leader>l :set list!
 nmap <leader>, :w
-
-"
-" To insert Unicode characters like the ones below
-" 1) Enter Insert mode
-" 2) Enter Visual mode
-" 3) Type UNICDE character code (with u prefix)
-" Example "i<C-V>u00ca"     √ä (Should be a funny looking E)
-" Codes used below:
-"   ¬¨       u00ac
-"   ‚Ä£       u2023
-"   ‚ñ∏       u25b8
-" To get more information on what invisible characters can be mapped use :help listchars
-
 "
 " Shortcuts for file editing
 map <leader>ew :edit    <C-R>=expand("%:p:h") . "/"
@@ -95,16 +112,33 @@ map <leader>es :split   <C-R>=expand("%:p:h") . "/"
 map <leader>ev :vsplit  <C-R>=expand("%:p:h") . "/"
 map <leader>et :tabe    <C-R>=expand("%:p:h") . "/"
 
+" Bubble text with the normal movement keys.
+" This works for single lines in normal mode.
+" Or multiple lines in visual mode
+nmap <C-k>      [e
+nmap <C-j>      ]e
+vmap <C-j>      ]egv
+vmap <C-k>      [egv
+
+" Ctrol-A Will align the /= sign on all lines in selection
+nmap <C-A>      :Tabularize /=
+
+" Toggle the history window to see all the old states.
+nmap <F5>      :GundoToggle
+
 " Set the highlighting for
 "   Search
-highlight Search    ctermfg=3   ctermbg=NONE    cterm=NONE
+highlight Search        ctermfg=3   ctermbg=NONE    cterm=NONE
 "   Matched parenthesis
 highlight clear MatchParen
-highlight MatchParen ctermfg=1  ctermbg=NONE    cterm=NONE
+highlight MatchParen    ctermfg=1   ctermbg=NONE    cterm=NONE
 
-highlight SpellBad ctermfg=1   ctermbg=NONE    cterm=underline
-highlight SpellCap ctermfg=2   ctermbg=NONE    cterm=underline 
+highlight SpellBad      ctermfg=1   ctermbg=NONE    cterm=underline
+highlight SpellCap      ctermfg=2   ctermbg=NONE    cterm=underline
 
+" Color of special characters EOL and tab
+highlight NonText       ctermfg=8
+highlight SpecialKey    ctermfg=8
 
 "set background=dark
 "let g:solarized_termtrans=1
@@ -114,6 +148,60 @@ highlight SpellCap ctermfg=2   ctermbg=NONE    cterm=underline
 "colorscheme solarized
 
 
+nnoremap <C-H> :Hexmode<CR>
+inoremap <C-H> <Esc>:Hexmode<CR>
+vnoremap <C-H> :<C-U>Hexmode<CR>
 
+" ex command for toggling hex mode - define mapping if desired
+command -bar Hexmode call ToggleHex()
 
+" helper function to toggle hex mode
+function ToggleHex()
+  " hex mode should be considered a read-only operation
+  " save values for modified and read-only for restoration later,
+  " and clear the read-only flag for now
+  let l:modified=&mod
+  let l:oldreadonly=&readonly
+  let &readonly=0
+  let l:oldmodifiable=&modifiable
+  let &modifiable=1
+  if !exists("b:editHex") || !b:editHex
+    " save old options
+    let b:oldft=&ft
+    let b:oldbin=&bin
+    " set new options
+    setlocal binary " make sure it overrides any textwidth, etc.
+    let &ft="xxd"
+    " set status
+    let b:editHex=1
+    " switch to hex editor
+    %!xxd
+  else
+    " restore old options
+    let &ft=b:oldft
+    if !b:oldbin
+      setlocal nobinary
+    endif
+    " set status
+    let b:editHex=0
+    " return to normal editing
+    %!xxd -r
+  endif
+  " restore values for modified and read only state
+  let &mod=l:modified
+  let &readonly=l:oldreadonly
+  let &modifiable=l:oldmodifiable
+endfunction
+
+" vim -b : edit binary using xxd-format!
+augroup Binary
+  au!
+  au BufReadPre  *.bin let &bin=1
+  au BufReadPost *.bin if &bin | %!xxd
+  au BufReadPost *.bin set ft=xxd | endif
+  au BufWritePre *.bin if &bin | %!xxd -r
+  au BufWritePre *.bin endif
+  au BufWritePost *.bin if &bin | %!xxd
+  au BufWritePost *.bin set nomod | endif
+augroup END
 
