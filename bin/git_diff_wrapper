@@ -1,6 +1,4 @@
 #!/bin/sh
 
-echo "Checking: $2 $5"
-
 vimdiff "$2" "$5"
 

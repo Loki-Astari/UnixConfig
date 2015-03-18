@@ -12,9 +12,10 @@
 
 " Set what invisible characters looks like
 
-set listchars=eol:¬,tab:▸\ 
+set listchars=tab:▸\ ,trail:␣
 " Set the colour of newline and tab so they are not so obvious
 " Show invisible characters by default
+" You should see trailing white space on this line:       
 set list
 
 " Turn on the ruler
@@ -33,7 +34,12 @@ set scrolloff=15
 set number
 
 if &diff
-    highlight! link DiffText MatchParen
+    "highlight! link DiffText MatchParen
+
+    highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Green
+    highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+    highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Blue
+    highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Blue
 endif
 
 

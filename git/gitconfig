@@ -22,3 +22,5 @@
     autosetuprebase = always
 [push]
 	default = matching
+[merge]
+	tool = vimdiff
