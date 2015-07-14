@@ -23,6 +23,7 @@ Motion:         jkhl        up/down/right/left
 Motion used in command only:
                 a<type>     Ambiant     
                 i<type>     Inner
+                s<type>     Surround  (adds/delete/change/yank surrounding item (eg quotes)).
                     type:   w   ->  word
                             s   ->  sentence
                             p   ->  paragraph
@@ -51,6 +52,8 @@ y<motion>       yank text from register
 p               pull text (insert) from register
 s               substitute (delete then insert)     synonym:    cl
 o               append on next (new) line:          synonym:    $a<cr>
+gc              Go comment. Comments text object defined by motion.
+gr              Go replace. Replaces text object defined by motion.
 
 
 I               insert from beginning of line       synonym ^i

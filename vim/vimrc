@@ -31,7 +31,10 @@ execute pathogen#infect()
 set scrolloff=15
 
 " Turn on line numbers
+" Turning them both on will activate hybrid mode if available.
+" Or the last one selected if not
 set number
+set relativenumber
 
 if &diff
     "highlight! link DiffText MatchParen
