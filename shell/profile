@@ -37,7 +37,7 @@ export PATH="${PATH}:/mnt/cluster/bh/Cloud/build/bin"
 
 export PATH=${PATH}:${EC2_HOME}/bin
 if [[ "`uname -s`" == "Darwin" ]]; then
-    export JAVA_HOME='/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/MacOS/itms/java'
+    export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home'
 else
     export JAVA_HOME=/usr
 fi
