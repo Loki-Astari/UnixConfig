@@ -34,7 +34,7 @@ set scrolloff=15
 " Turning them both on will activate hybrid mode if available.
 " Or the last one selected if not
 set number
-set relativenumber
+"set relativenumber
 
 if &diff
     "highlight! link DiffText MatchParen
