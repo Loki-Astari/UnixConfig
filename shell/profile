@@ -38,6 +38,7 @@ else
     export JAVA_HOME=/usr
 fi
 
+export PATH=${HOME}/bin:/apollo/env/SDETools/bin/:${PATH}
 
 if [ -f ~/.git-completion.bash ]; then
   source ~/.git-completion.bash
