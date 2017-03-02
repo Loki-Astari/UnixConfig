@@ -11,4 +11,5 @@ ln -s ~/.config/git/gitconfig ~/.gitconfig
 
 ln -s ~/.config/shell/profile ~/.profile
 ln -s ~/.config/shell/tcshrc ~/.tcshrc
+ln -s ~/.config/shell/git-completion.bash ~/.git-completion.bash
 ln -s ~/.config/bin ~/bin

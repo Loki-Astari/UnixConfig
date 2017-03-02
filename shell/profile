@@ -67,3 +67,7 @@ if [[ -e .lsapi ]]; then
     AUTHDB_PW=`tail -1 .lsapi`
 fi
 
+if [ -f ~/.git-completion.bash ]; then
+  source ~/.git-completion.bash
+fi
+
