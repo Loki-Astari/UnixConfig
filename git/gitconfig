@@ -12,6 +12,7 @@
 [core]
 	editor = vim
 	excludesfile = /Users/myork/.gitignore_global
+	pager = less -FMRiX
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -24,3 +25,5 @@
 	default = matching
 [merge]
 	tool = vimdiff
+[alias]
+	dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%ar%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
