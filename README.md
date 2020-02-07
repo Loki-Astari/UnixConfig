@@ -10,7 +10,7 @@ In one line: ( read below for what is on this line)
 
         cd;git clone git@github.com:Loki-Astari/UnixConfig.git ~/.config;cd .config;git submodule init;git submodule update;chmod +x init;./init;cd
 
-Pathagin install instructions:
+Pathogen install instructions:
 
         mkdir -p ~/.vim/autoload ~/.vim/bundle; \
         curl -so ~/.vim/autoload/pathogen.vim \
