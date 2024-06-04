@@ -28,6 +28,3 @@
 [submodule "vim/bundle/ReplaceWithRegister"]
 	path = vim/bundle/ReplaceWithRegister
 	url = git@github.com:vim-scripts/ReplaceWithRegister.git
-[submodule "nvim"]
-	path = nvim
-	url = git@github.com:Loki-Astari/kickstart.nvim.git
