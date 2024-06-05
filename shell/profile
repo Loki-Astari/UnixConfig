@@ -22,7 +22,7 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-alias vi=vim
+alias vi=nvim
 alias gd="git difftool --no-prompt --tool=vimdiff"
 alias sync="sudo ntpdate pool.ntp.org"
 alias netsync="sudo /etc/init.d/networking restart"
