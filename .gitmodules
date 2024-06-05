@@ -30,7 +30,7 @@
 	url = git@github.com:vim-scripts/ReplaceWithRegister.git
 [submodule "nvim.chad"]
 	path = nvim.chad
-	url = https://github.com/NvChad/NvChad
+	url = git@github.com:Loki-Astari/NvChad.git
 [submodule "nvim.kick"]
 	path = nvim.kick
 	url = git@github.com:Loki-Astari/kickstart.nvim.git
