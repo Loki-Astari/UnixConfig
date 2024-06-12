@@ -28,9 +28,9 @@
 [submodule "vim/bundle/ReplaceWithRegister"]
 	path = vim/bundle/ReplaceWithRegister
 	url = git@github.com:vim-scripts/ReplaceWithRegister.git
-[submodule "nvim.chad"]
-	path = nvim.chad
-	url = git@github.com:Loki-Astari/NvChad.git
 [submodule "nvim.kick"]
 	path = nvim.kick
 	url = git@github.com:Loki-Astari/kickstart.nvim.git
+[submodule "nvim.simple"]
+	path = nvim.simple
+	url = git@github.com:Loki-Astari/nvim.simple.git

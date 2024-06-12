@@ -145,4 +145,20 @@ zM                  Close all folds
 zj                  Move to next fold
 zk                  Move to prev fold
 
+function X(int: one, float: two, {one, two: Some::Long::Text})
+
+
+Advanced Motions:
+    i<action>       In
+                    Example:    iw      The whole current word
+                                i{      Everything inside the current braces (but not including)
+    a<action>       Around
+                    Example:    a{      Everything inside the current braces including braces.
+
+    w               Jump word
+    b               Jump back word 
+    f<l>            Find next letter <l> (no move if not ther)
+    F<l>            Find prev letter <l>
+    t<l>            To next letter <l> (but stop one short)
+    T<l>            To prev letter <l>
 
