@@ -222,3 +222,4 @@ augroup Binary
   au BufWritePost *.bin set nomod | endif
 augroup END
 
+autocmd FilterWritePre * if &diff | setlocal wrap< | endif
