@@ -196,8 +196,20 @@ return {
         --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
         --  - settings (table): Override the default settings passed when initializing the server.
         --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+        --
+
+        -- Use the local Makefile to get headers required for the CPP LS
+        local handle = assert(io.popen('make neovimflags', 'r'))
+        local output = handle:read('*a')
+        io.close(handle)
+
+        local flagFile = assert(io.open('compile_flags.txt', 'w'))
+        for word in output:gmatch("%S+") do
+            flagFile:write(word .. '\n')
+        end
+        flagFile:close()
+
         local servers = {
-            -- clangd = {},
             -- gopls = {},
             -- pyright = {},
             -- rust_analyzer = {},
@@ -245,6 +257,12 @@ return {
                         -- diagnostics = { disable = { 'missing-fields' } },
                     },
                 },
+            },
+
+            clangd = {
+                capabilities = capabilities.clangd,
+                cmd = {'/Library/Developer/CommandLineTools/usr/bin/clangd',},
+                filetypes = {'c', 'cpp', 'cc', 'mpp', 'ixx', 'tpp'},
             },
         }
 
