@@ -4,3 +4,5 @@ nvim.chad
 iterm2/
 gtk-2.0/
 nvim.*
+compile_flags.txt
+lazy-lock.json
