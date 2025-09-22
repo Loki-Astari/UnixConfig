@@ -33,6 +33,7 @@ require('lazy').setup({
     require('plugins.colourtheme'),
     require('plugins.bufferline'),
     require('plugins.lualine'),
+    require('plugins.treesitter'),
 
 })
 
