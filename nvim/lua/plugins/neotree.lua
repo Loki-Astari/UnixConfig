@@ -12,7 +12,6 @@ return {
 
     config = function()
         vim.keymap.set("n", "\\",        ":Neotree toggle position=left<CR>l")
-        vim.keymap.set("n", "<leader>e", ":Neotree toggle position=left<CR>l")
         require("neo-tree").setup({
 
             -- Everything below this line is set to default
@@ -361,6 +360,11 @@ return {
                     },
                 },
             },
+        })
+    end,
+    whichkey = function(wk)
+        wk.add({
+            {"<leader>e", ":Neotree toggle position=left<CR>l", desc = 'Show Neo-Tree'},
         })
     end,
 }
