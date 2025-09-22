@@ -40,6 +40,7 @@ require('lazy').setup({
     require('plugins.lsp'),
     require('plugins.autocomplete'),
     require('plugins.gitsigns'),
+    require('plugins.whichkey'),
 
 })
 
