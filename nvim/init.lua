@@ -30,7 +30,8 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
 
     require('plugins.neotree'),
-    require('plugins.colourtheme')
+    require('plugins.colourtheme'),
+    require('plugins.bufferline'),
 
 })
 
