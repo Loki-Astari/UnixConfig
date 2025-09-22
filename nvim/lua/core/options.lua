@@ -1,4 +1,3 @@
---
 -- To insert Unicode characters like the ones below
 -- 1) Enter Insert mode
 -- 2) Enter Visual mode
@@ -62,4 +61,11 @@ vim.o.ignorecase    = true
 -- Line to long:
 vim.api.nvim_set_hl(0, "ColorColumn", { bg = "Red" })
 
+-- Diagnostic Messages (LSP)
+-- Are placed in the signcolumn. If this is not visable it will be inserted.
+-- This insertion causes the text to jump right and then left when the error is removed.
+-- By making sure the column is always there the text does not jump around.
+vim.opt.signcolumn = 'yes'
+
+--
 
