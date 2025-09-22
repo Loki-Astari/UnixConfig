@@ -3,6 +3,8 @@ require 'core.keymaps'
 
 -- Install NerdFonts
 --      brew install --cask font-hack-nerd-font
+-- Install ripgrep for telescope
+--      brew install ripgrep
 -- Modify Terminal configurations:
 --      1: Use NerdFonts
 --              iterm2/Settings.../profiles/text/font = Hack Nerd Fond Mono
@@ -34,6 +36,7 @@ require('lazy').setup({
     require('plugins.bufferline'),
     require('plugins.lualine'),
     require('plugins.treesitter'),
+    require('plugins.telescope'),
 
 })
 
