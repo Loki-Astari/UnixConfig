@@ -11,8 +11,8 @@ return {
     lazy = false, -- neo-tree will lazily load itself
 
     config = function()
-        vim.keymap.set("n", "\\",        ":Neotree toggle position=left<CR>")
-        vim.keymap.set("n", "<leader>e", ":Neotree toggle position=left<CR>")
+        vim.keymap.set("n", "\\",        ":Neotree toggle position=left<CR>l")
+        vim.keymap.set("n", "<leader>e", ":Neotree toggle position=left<CR>l")
         require("neo-tree").setup({
 
             -- Everything below this line is set to default
