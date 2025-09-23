@@ -41,6 +41,7 @@ require('lazy').setup({
     require('plugins.autocomplete'),
     require('plugins.gitsigns'),
     require('plugins.whichkey'),
+    require('plugins.cursor'),
 
 })
 
