@@ -203,11 +203,11 @@ return {
         local output = handle:read('*a')
         io.close(handle)
 
-        local flagFile = assert(io.open('compile_flags.txt', 'w'))
-        for word in output:gmatch("%S+") do
-            flagFile:write(word .. '\n')
-        end
-        flagFile:close()
+        -- local flagFile = assert(io.open('compile_flags.txt', 'w'))
+        -- for word in output:gmatch("%S+") do
+        --    flagFile:write(word .. '\n')
+        -- end
+        -- flagFile:close()
 
         local servers = {
             -- gopls = {},
