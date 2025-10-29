@@ -203,12 +203,17 @@ return {
         local output = handle:read('*a')
         io.close(handle)
 
-        -- local flagFile = assert(io.open('compile_flags.txt', 'w'))
-        -- for word in output:gmatch("%S+") do
-        --    flagFile:write(word .. '\n')
-        -- end
-        -- flagFile:close()
+        --local flagFile = assert(io.open('compile_flags.txt', 'w'))
+        --for word in output:gmatch("%S+") do
+        --   flagFile:write(word .. '\n')
+        --end
+        --flagFile:close()
 
+        local cmdLine = '/Library/Developer/CommandLineTools/usr/bin/clangd ' .. output;
+        local cmdArray = {}
+        for word in string.gmatch(cmdLine, "%S+") do
+            table.insert(cmdArray, word)
+        end
         local servers = {
             -- gopls = {},
             -- pyright = {},
@@ -261,7 +266,8 @@ return {
 
             clangd = {
                 capabilities = capabilities.clangd,
-                cmd = {'/Library/Developer/CommandLineTools/usr/bin/clangd',},
+                -- cmd = {'/Library/Developer/CommandLineTools/usr/bin/clangd',},
+                cmd = cmdArray,
                 filetypes = {'c', 'cpp', 'cc', 'mpp', 'ixx', 'tpp'},
             },
         }
