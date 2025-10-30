@@ -11,7 +11,7 @@
     diff =
 [core]
 	editor = vim
-	excludesfile = /Users/myork/.gitignore_global
+	excludesfile = ~/.config/vim/gitignore_global
 	pager = less -FMRiX
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
