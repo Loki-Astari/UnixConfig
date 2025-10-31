@@ -205,6 +205,8 @@ return {
 
         local flagFile = assert(io.open('compile_flags.txt', 'w'))
         flagFile:write("-x\nc++\n");
+        flagFile:write("-I..\n");
+        flagFile:write("-I.\n");
         for word in output:gmatch("%S+") do
            flagFile:write(word .. '\n')
         end
