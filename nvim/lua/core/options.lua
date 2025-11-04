@@ -68,4 +68,5 @@ vim.api.nvim_set_hl(0, "ColorColumn", { bg = "Red" })
 vim.opt.signcolumn = 'yes'
 
 --
+vim.opt.makeprg = "NEOVIM=TRUE make"
 
