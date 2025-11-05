@@ -35,7 +35,10 @@ vim.wo.number = true                    -- Line Numbers
 vim.o.wrap = false                      -- don't wrap lines of code
 vim.o.linebreak = true
 
-vim.o.clipboard = 'unnamedplus'         -- sync with system clipboard
+-- With the below enabled any actions are also pulled onto the system clipboard.
+-- This is pain for me as I still use the mouse and the system clipboard a lot
+-- So I have disabled it.
+--vim.o.clipboard = 'unnamedplus'         -- sync with system clipboard
 
 -- Spelling options.
 vim.opt.spell = true
