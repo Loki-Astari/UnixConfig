@@ -42,6 +42,7 @@ require('lazy').setup({
     require('plugins.gitsigns'),
     require('plugins.whichkey'),
     require('plugins.cursor'),
+    require('plugins.commands'),
 
 })
 
