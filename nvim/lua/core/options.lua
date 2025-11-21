@@ -59,7 +59,7 @@ vim.opt.smartindent = true
 vim.opt.autoindent  = true
 
 -- Searching
-vim.o.ignorecase    = true
+-- vim.o.ignorecase    = true
 
 -- Line to long:
 vim.api.nvim_set_hl(0, "ColorColumn", { bg = "Red" })
