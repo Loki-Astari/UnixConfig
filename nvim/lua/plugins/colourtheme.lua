@@ -64,8 +64,9 @@ return {
 
         -- The cursor was black on iTerm2 on the mac.
         -- Need to make the cursor white.
+        vim.api.nvim_set_hl(0, "nCursor", {fg = "black", bg = "white"})
         vim.api.nvim_set_hl(0, "iCursor", {fg = "white", bg = "white"})
-        vim.o.guicursor = "n-v-c:block,i:ver100-iCursor,r-cr:hor20,o:hor50"
+        vim.o.guicursor = "n-v-c:block-nCursor,i:ver100-iCursor,r-cr:hor20,o:hor50"
 
         -- Make tabs and trailing spaces stand out.
         vim.cmd("highlight NonText guifg=#FFFFFF")

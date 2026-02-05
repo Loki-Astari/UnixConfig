@@ -1,4 +1,4 @@
-return {
+x=  {
     'greggh/claude-code.nvim',
     dependencies = {
         "nvim-lua/plenary.nvim", -- Required for git operations
@@ -36,3 +36,15 @@ return {
         })
     end
 }
+
+return {
+    dir = "~/Repo/Claude/claude.nvim",
+    config = function()
+      require("claude").setup({
+        width = 0.4,  -- 40% of screen width (or use integers for columns)
+        command = "claude",
+      })
+    end,
+}
+
+

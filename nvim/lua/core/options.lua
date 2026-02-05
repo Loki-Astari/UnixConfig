@@ -73,3 +73,15 @@ vim.opt.signcolumn = 'yes'
 --
 vim.opt.makeprg = "NEOVIM=TRUE make"
 
+-- Auto-reload config files when saved
+-- Note: Plugin files won't fully reload (lazy.nvim manages those)
+local config_path = vim.fn.stdpath('config')
+vim.api.nvim_create_autocmd('BufWritePost', {
+    pattern = config_path .. '/lua/core/*.lua',
+    callback = function(args)
+        dofile(args.file)
+        vim.notify('Reloaded: ' .. vim.fn.fnamemodify(args.file, ':t'), vim.log.levels.INFO)
+    end,
+    desc = 'Auto-reload core config files on save',
+})
+
