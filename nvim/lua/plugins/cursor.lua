@@ -1,4 +1,4 @@
-return {
+                                                                        return {
     'Loki-Astari/cursor',
     config = function()
         require('cursor').setup({
@@ -11,10 +11,11 @@ return {
     end,
     whichkey = function(wk)
         wk.add({
-            {'<leader>c', group = 'Cursor'},
-            {'<leader>ca', ':CursorOpen<CR>',   desc = 'Open (if needed), Switch to Cursor Window'},
-            {'<leader>cc', ':CursorClose<CR>',  desc = 'Close Cursor Window'},
-            {'<leader>ct', ':CursorToggle<CR>', desc = 'Toggle Cursor Window'},
+            {'<leader>a', group = 'AI'},
+            {'<leader>ac', group = 'Cursor'},
+            {'<leader>aca', ':CursorOpen<CR>',   desc = 'Open (if needed), Switch to Cursor Window'},
+            {'<leader>acc', ':CursorClose<CR>',  desc = 'Close Cursor Window'},
+            {'<leader>act', ':CursorToggle<CR>', desc = 'Toggle Cursor Window'},
         })
     end,
 }

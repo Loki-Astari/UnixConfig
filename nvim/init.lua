@@ -41,9 +41,11 @@ require('lazy').setup({
     require('plugins.autocomplete'),
     require('plugins.gitsigns'),
     require('plugins.whichkey'),
-    require('plugins.cursor'),
     require('plugins.commands'),
     require('plugins.clojure'),
+    -- AI Tools
+    require('plugins.cursor'),
+    require('plugins.claude'),
 })
 
 
