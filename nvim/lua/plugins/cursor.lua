@@ -1,4 +1,4 @@
-                                                                        return {
+return {
     'Loki-Astari/cursor',
     config = function()
         require('cursor').setup({

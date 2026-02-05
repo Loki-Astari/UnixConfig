@@ -70,6 +70,25 @@ vim.api.nvim_set_hl(0, "ColorColumn", { bg = "Red" })
 -- By making sure the column is always there the text does not jump around.
 vim.opt.signcolumn = 'yes'
 
+-- Auto-reload files when changed externally (e.g., by Claude Code)
+vim.opt.autoread = true
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
+    callback = function()
+        if vim.fn.getcmdwintype() == '' then
+            vim.cmd('checktime')
+        end
+    end,
+    desc = 'Auto-reload files changed outside of Neovim',
+})
+
+-- Timer-based auto-reload (works even when in terminal/plugin windows)
+local reload_timer = vim.uv.new_timer()
+reload_timer:start(1000, 1000, vim.schedule_wrap(function()
+    if vim.fn.getcmdwintype() == '' then
+        vim.cmd('checktime')
+    end
+end))
+
 --
 vim.opt.makeprg = "NEOVIM=TRUE make"
 
