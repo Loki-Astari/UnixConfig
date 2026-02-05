@@ -85,3 +85,46 @@ vim.api.nvim_create_autocmd('BufWritePost', {
     desc = 'Auto-reload core config files on save',
 })
 
+-- Restore cursor position when reopening a file
+vim.api.nvim_create_autocmd('BufReadPost', {
+    callback = function()
+        local mark = vim.api.nvim_buf_get_mark(0, '"')
+        local line_count = vim.api.nvim_buf_line_count(0)
+        if mark[1] > 0 and mark[1] <= line_count then
+            vim.api.nvim_win_set_cursor(0, mark)
+        end
+    end,
+    desc = 'Restore cursor position on file open',
+})
+
+-- Session options - what to save/restore
+vim.opt.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,winpos'
+
+-- Auto-save session on exit (per directory)
+vim.api.nvim_create_autocmd('VimLeavePre', {
+    callback = function()
+        local session_dir = vim.fn.stdpath('state') .. '/sessions'
+        vim.fn.mkdir(session_dir, 'p')
+        local cwd = vim.fn.getcwd():gsub('/', '_')
+        local session_file = session_dir .. '/' .. cwd .. '.vim'
+        vim.cmd.mksession({ session_file, bang = true })
+    end,
+    desc = 'Auto-save session on exit',
+})
+
+-- Auto-load session on startup (if one exists for this directory)
+vim.api.nvim_create_autocmd('VimEnter', {
+    nested = true,
+    callback = function()
+        if vim.fn.argc() == 0 then
+            local session_dir = vim.fn.stdpath('state') .. '/sessions'
+            local cwd = vim.fn.getcwd():gsub('/', '_')
+            local session_file = session_dir .. '/' .. cwd .. '.vim'
+            if vim.fn.filereadable(session_file) == 1 then
+                vim.cmd.source(session_file)
+            end
+        end
+    end,
+    desc = 'Auto-load session on startup',
+})
+
