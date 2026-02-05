@@ -3,13 +3,89 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000000
 SAVEHIST=10000000
 
-alias python=python3
-alias pip=pip3
 
 
-export PATH="${PATH}:${HOME}/bin:$HOME/.local/bin"
+export PATH="${PATH}:${HOME}/bin:${HOME}/.local/bin"
+export PATH="${PATH}:${HOME}/Repo/app/bin"
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+
+export AWS_PROFILE=sre
+export AWS_REGION=us-west-2
+export ANTHROPIC_MODEL='global.anthropic.claude-opus-4-5-20251101-v1:0'
+export CLAUDE_CODE_USE_BEDROCK=1
+
 
 if command -v ngrok &>/dev/null; then
     eval "$(ngrok completion)"
 fi
 
+
+source ~/.safe-chain/scripts/init-posix.sh # Safe-chain Zsh initialization script
+
+# Copy this snippet to your ~/.zshrc (or equivalent file for your shell)
+# to install the switch-vault helper function.
+
+switch-vault() {
+    if [[ $# -ne 1 ]]; then
+        echo "Usage: $0 <stack-name>" >&2
+        echo "Updates VAULT_ADDR in this shell to the Vault address of the given stack." >&2
+        return 1
+    fi
+    local stack=$1
+    case $stack in
+        aws-mantle)
+            export VAULT_ADDR="https://vault.mantle.amperity.systems:8200"
+            ;;
+        aws-dev)
+            export VAULT_ADDR="https://vault.dev.amperity.systems:8200"
+            ;;
+        aws-stage)
+            export VAULT_ADDR="https://vault.stage.amperity.systems:8200"
+            ;;
+        aws-prod)
+            export VAULT_ADDR="https://vault.prod.amperity.systems:8200"
+            ;;
+        aws-prod-cc1)
+            export VAULT_ADDR="https://vault.aws-prod-cc1.amperity.systems:8200"
+            ;;
+        aws-prod-apse2)
+            export VAULT_ADDR="https://vault.aws-prod-apse2.amperity.systems:8200"
+            ;;
+        az-stage)
+            export VAULT_ADDR="https://vault.az-stage.amperity.systems:8200"
+            ;;
+        az-prod)
+            export VAULT_ADDR="https://vault.az-prod.amperity.systems:8200"
+            ;;
+        az-prod-en1)
+            export VAULT_ADDR="https://vault.az-prod-en1.amperity.systems:8200"
+            ;;
+        *)
+            >&2 echo "Unknown stack: $stack"
+            return 1
+            ;;
+    esac
+}
+
+
+function vault-login() {
+  printf "Enter Okta password (hidden): "
+  read -s password
+  echo
+
+  local current_addr=$VAULT_ADDR
+
+  for stack in aws-mantle aws-dev aws-stage aws-prod aws-prod-cc1 aws-prod-apse2 az-stage az-prod az-prod-en1; do
+    switch-vault $stack
+    echo "Logging into $stack"
+    echo -n "$password" | vault login -method=okta username=<okta username> password=-
+    if [ $? -ne 0 ]; then
+      echo "Failed to login to $stack"
+      return 1
+    fi
+    echo "Logged into $stack"
+  done
+
+  unset password
+  export VAULT_ADDR=$current_addr
+}
