@@ -199,30 +199,93 @@ return {
         --
 
         -- Use the local Makefile to get headers required for the CPP LS
-        local handle = assert(io.popen('make neovimflags', 'r'))
-        local output = handle:read('*a')
-        io.close(handle)
+        -- Cache the result to avoid running `make neovimflags` on every startup.
+        -- The cache is invalidated when the Makefile is newer than the cache file.
+        local cache_file = vim.fn.stdpath('cache') .. '/neovimflags_cache_' .. vim.fn.sha256(vim.fn.getcwd())
+        local makefile = vim.fn.getcwd() .. '/Makefile'
+        local output = ''
 
-        local flagFile = assert(io.open('compile_flags.txt', 'w'))
-        flagFile:write("-x\nc++\n");
-        flagFile:write("-I..\n");
-        flagFile:write("-I.\n");
-        for word in output:gmatch("%S+") do
-           flagFile:write(word .. '\n')
+        local function read_cache()
+            local f = io.open(cache_file, 'r')
+            if f then
+                local content = f:read('*a')
+                f:close()
+                return content
+            end
+            return nil
         end
-        flagFile:close()
 
-        local cmdLine = "-x c++ " .. output;
-        local cmdArray = {'/Library/Developer/CommandLineTools/usr/bin/clangd', '--query-driver=/usr/bin/g++', }
-        for word in string.gmatch(cmdLine, "%S+") do
-            table.insert(cmdArray, "--extra-arg=" .. word)
+        local function write_compile_flags(flags)
+            local flagFile = io.open(cache_file, 'w')
+            if flagFile then
+                flagFile:write("-x\nc++\n")
+                flagFile:write("-I..\n")
+                flagFile:write("-I.\n")
+                for word in flags:gmatch("%S+") do
+                    flagFile:write(word .. '\n')
+                end
+                flagFile:close()
+            end
         end
-        local flagFile = assert(io.open('check', 'w'))
-        flagFile:write(cmdLine .. "\n\n");
-        for index, word in ipairs(cmdArray) do
-            flagFile:write("A: " .. word .. "\n");
+
+        local function build_clangd_cmd(flags)
+            local cmdLine = "-x c++ " .. flags
+            local cmdArray = {'/Library/Developer/CommandLineTools/usr/bin/clangd', '--query-driver=/usr/bin/g++', }
+            for word in string.gmatch(cmdLine, "%S+") do
+                table.insert(cmdArray, "--extra-arg=" .. word)
+            end
+            return cmdArray
         end
-        flagFile.close()
+
+        -- Check if cache is still valid (Makefile hasn't changed)
+        local makefile_stat = vim.uv.fs_stat(makefile)
+        local cache_stat = vim.uv.fs_stat(cache_file)
+        local cache_valid = cache_stat and makefile_stat and cache_stat.mtime.sec >= makefile_stat.mtime.sec
+
+        if cache_valid then
+            output = read_cache() or ''
+        else
+            -- Use stale cache immediately so startup isn't blocked
+            output = read_cache() or ''
+            -- Run `make neovimflags` asynchronously if Makefile exists
+            if makefile_stat then
+                vim.system(
+                    { 'make', 'neovimflags' },
+                    { text = true, cwd = vim.fn.getcwd() },
+                    vim.schedule_wrap(function(result)
+                        if result.code == 0 and result.stdout then
+                            local new_output = result.stdout
+                            write_compile_flags(new_output)
+                            -- Restart clangd with updated flags if it's running
+                            local clients = vim.lsp.get_clients({ name = 'clangd' })
+                            if #clients > 0 then
+                                local new_cmd = build_clangd_cmd(new_output)
+                                vim.lsp.stop_client(clients)
+                                vim.defer_fn(function()
+                                    require('lspconfig').clangd.setup({
+                                        cmd = new_cmd,
+                                        filetypes = {'c', 'cpp', 'cc', 'mpp', 'ixx', 'tpp'},
+                                    })
+                                    -- Re-attach to open buffers
+                                    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                                        if vim.api.nvim_buf_is_loaded(buf) then
+                                            local ft = vim.bo[buf].filetype
+                                            if vim.tbl_contains({'c', 'cpp', 'cc', 'mpp', 'ixx', 'tpp'}, ft) then
+                                                vim.api.nvim_buf_call(buf, function()
+                                                    vim.cmd('LspStart clangd')
+                                                end)
+                                            end
+                                        end
+                                    end
+                                end, 500)
+                            end
+                        end
+                    end)
+                )
+            end
+        end
+
+        local cmdArray = build_clangd_cmd(output)
         local servers = {
             -- gopls = {},
             -- pyright = {},
@@ -298,7 +361,17 @@ return {
         vim.list_extend(ensure_installed, {
             'stylua', -- Used to format Lua code
         })
-        require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
+        -- Defer mason-tool-installer so it doesn't block startup.
+        -- The tool installation check involves registry lookups that can be slow.
+        vim.api.nvim_create_autocmd('VimEnter', {
+            once = true,
+            callback = function()
+                vim.defer_fn(function()
+                    require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+                end, 500)
+            end,
+        })
 
         require('mason-lspconfig').setup {
             ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)

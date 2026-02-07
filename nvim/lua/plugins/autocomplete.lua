@@ -23,7 +23,13 @@ return { -- Autocompletion
                 {
                     'rafamadriz/friendly-snippets',
                     config = function()
-                        require('luasnip.loaders.from_vscode').lazy_load()
+                        -- Defer snippet loading so it doesn't block startup (~25ms savings)
+                        vim.api.nvim_create_autocmd('InsertEnter', {
+                            once = true,
+                            callback = function()
+                                require('luasnip.loaders.from_vscode').lazy_load()
+                            end,
+                        })
                     end,
                 },
             },

@@ -27,20 +27,17 @@ alias gd="git difftool --no-prompt --tool=vimdiff"
 alias sync="sudo ntpdate pool.ntp.org"
 alias netsync="sudo /etc/init.d/networking restart"
 alias version="lsb_release -a"
-alias sync='sudo date +%Y-%m-%dT%H:%M:%S%Z --set=`curl http://www.timeapi.org/pdt/now`'
 #alias ctags="ctags --langmap=ObjectiveC:.mm.h"
 alias hd="od -t x1 -t c"
 alias atool='autoreconf --install'
 
-if [[ "`uname -s`" == "Darwin" ]]; then
-    export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home'
+if [[ "$OSTYPE" == darwin* ]]; then
+    export JAVA_HOME="$(/usr/libexec/java_home 2>/dev/null || echo /usr)"
 else
     export JAVA_HOME=/usr
 fi
 
-export PATH=${HOME}/bin:/apollo/env/SDETools/bin/:${PATH}
-
-if [ -f ~/.git-completion.bash ]; then
+if [[ "$0" == -* ]] && [ -f ~/.git-completion.bash ]; then
   source ~/.git-completion.bash
 fi
 

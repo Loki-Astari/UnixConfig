@@ -1,3 +1,6 @@
+-- Enable bytecode cache for faster module loading
+vim.loader.enable()
+
 require 'core.options'
 require 'core.keymaps'
 
