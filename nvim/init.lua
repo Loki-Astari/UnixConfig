@@ -47,8 +47,7 @@ require('lazy').setup({
     require('plugins.commands'),
     require('plugins.clojure'),
     -- AI Tools
-    require('plugins.cursor'),
-    require('plugins.claude'),
+    require('plugins.AIAgent'),
 })
 
 
