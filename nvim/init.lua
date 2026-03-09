@@ -4,6 +4,8 @@ vim.loader.enable()
 require 'core.options'
 require 'core.keymaps'
 
+vim.opt.runtimepath:prepend("/Users/myork/Repo/Claude")
+
 -- Install NerdFonts
 --      brew install --cask font-hack-nerd-font
 -- Install ripgrep for telescope

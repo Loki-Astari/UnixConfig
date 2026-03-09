@@ -6,6 +6,18 @@ return {
         command = "claude",
       })
     end,
+    whichkey = function(wk)
+
+       wk.add({
+           mode = { "n", "v" },
+           {'<leader>a', group = "Agent"},
+           {'<leader>ao', ':AgentOpen<cr>', desc = "Open agent (default)"},
+           {'<leader>ac', ':AgentOpen Cursor<cr>', desc = "Open Cursor agent"},
+           {'<leader>ax', ':AgentClose<cr>', desc = "Close current agent" },
+           {'<leader>at', ':AgentToggle<cr>', desc = "Toggle current agent" },
+           {'<leader>as', ':AgentSendSelection<cr>', desc = "Send selection to agent" },
+       })
+   end,
 }
 
 

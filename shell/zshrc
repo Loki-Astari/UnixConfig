@@ -32,6 +32,8 @@ if command -v ngrok >/dev/null 2>&1 && command -v compdef >/dev/null 2>&1; then
     source ~/.zsh_ngrok_completion
 fi
 
+export JIRA_API_TOKEN=`cat ${HOME}/.jira/token`
+export GIT_API_TOKEN=`cat ${HOME}/.github/token`
 
 if [[ -e ~/.safe-chain/scripts/init-posix.sh ]]; then
     source ~/.safe-chain/scripts/init-posix.sh
