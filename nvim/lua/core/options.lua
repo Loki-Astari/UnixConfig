@@ -35,6 +35,15 @@ vim.wo.number = true                    -- Line Numbers
 vim.o.wrap = false                      -- don't wrap lines of code
 vim.o.linebreak = true
 
+-- Enable line wrapping for markdown files only
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'markdown',
+    callback = function()
+        vim.opt_local.wrap = true
+    end,
+    desc = 'Wrap lines in markdown buffers',
+})
+
 -- With the below enabled any actions are also pulled onto the system clipboard.
 -- This is pain for me as I still use the mouse and the system clipboard a lot
 -- So I have disabled it.
