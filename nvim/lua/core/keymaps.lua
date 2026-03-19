@@ -38,8 +38,24 @@ vim.keymap.set('n', '<S-Right>',':vertical resize -2<CR>', opts)
 vim.keymap.set('n', '<S-Left>', ':vertical resize +2<CR>', opts)
 
 -- Moving between buffers
-vim.keymap.set('n', '<Tab>',    ':bnext<CR>', opts);
-vim.keymap.set('n', '<s-Tab>',  ':bprevious<CR>', opts);
+vim.keymap.set('n', '<Tab>',      ':bnext<CR>',     opts)
+vim.keymap.set('n', '<S-Tab>',    ':bprevious<CR>', opts)
+
+-- Jump to buffer by position (matches ordinal number shown on tab)
+vim.keymap.set('n', '<leader>1',  '<cmd>BufferLineGoToBuffer 1<CR>', opts)
+vim.keymap.set('n', '<leader>2',  '<cmd>BufferLineGoToBuffer 2<CR>', opts)
+vim.keymap.set('n', '<leader>3',  '<cmd>BufferLineGoToBuffer 3<CR>', opts)
+vim.keymap.set('n', '<leader>4',  '<cmd>BufferLineGoToBuffer 4<CR>', opts)
+vim.keymap.set('n', '<leader>5',  '<cmd>BufferLineGoToBuffer 5<CR>', opts)
+vim.keymap.set('n', '<leader>6',  '<cmd>BufferLineGoToBuffer 6<CR>', opts)
+vim.keymap.set('n', '<leader>7',  '<cmd>BufferLineGoToBuffer 7<CR>', opts)
+vim.keymap.set('n', '<leader>8',  '<cmd>BufferLineGoToBuffer 8<CR>', opts)
+vim.keymap.set('n', '<leader>9',  '<cmd>BufferLineGoToBuffer 9<CR>', opts)
+vim.keymap.set('n', '<leader>$',  '<cmd>BufferLineGoToBuffer -1<CR>', opts) -- last buffer
+
+-- Pick buffer by letter overlay
+vim.keymap.set('n', '<leader>bp', '<cmd>BufferLinePick<CR>',      opts)
+vim.keymap.set('n', '<leader>bx', '<cmd>BufferLinePickClose<CR>', opts)
 
 
 -- Vim Diff: push the diff to the right and move to the next diff
