@@ -12,7 +12,10 @@ vim.opt.runtimepath:prepend("/Users/myork/Repo/Claude")
 --      brew install ripgrep
 -- Modify Terminal configurations:
 --      1: Use NerdFonts
---              iterm2/Settings.../profiles/text/font = Hack Nerd Fond Mono
+--              IMPORTANT: Without this, file-type icons in bufferline tabs will
+--              appear as squares with question marks instead of the correct icons.
+--              iTerm2 → Settings → Profiles → Text → Font
+--              Set to: Hack Nerd Font Mono
 --      2: Context aware cursor color.
 --              iterm2/Settings.../profiles/colors/Context Aware Cursor Color
 
