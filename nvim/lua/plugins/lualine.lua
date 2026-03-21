@@ -41,7 +41,17 @@ return {
                 }
             },
             sections = {
-                lualine_a = {'mode'},
+                lualine_a = {
+                    {
+                        function()
+                            return require('aiagent').lualine_label()
+                                or require('lualine.utils.mode').get_mode()
+                        end,
+                        color = function()
+                            return require('aiagent').lualine_color()
+                        end,
+                    },
+                },
                 lualine_b = {'branch', 'diff', 'diagnostics'},
                 lualine_c = {'filename'},
                 lualine_x = {'encoding', 'filetype'},
