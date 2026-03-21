@@ -52,7 +52,18 @@ return {
                         end,
                     },
                 },
-                lualine_b = {'branch', 'diff', 'diagnostics'},
+                lualine_b = {
+                    {
+                        function()
+                            return require('aiagent').lualine_branch()
+                                or vim.b.gitsigns_head
+                                or ''
+                        end,
+                        icon = '\u{E0A0}',
+                    },
+                    'diff',
+                    'diagnostics',
+                },
                 lualine_c = {'filename'},
                 lualine_x = {'encoding', 'filetype'},
                 lualine_y = {'progress'},
