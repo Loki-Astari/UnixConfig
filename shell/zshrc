@@ -5,6 +5,17 @@ alias via="nvim +'autocmd VimEnter * AgentOpen'"
 HISTSIZE=10000000
 SAVEHIST=10000000
 
+if [[ -f ${HOME}/.cluade/token ]]; then
+    export CLAUDE_CODE_OAUTH_TOKEN=$(cat ${HOME}/.cluade/token)
+fi
+if [[ -f ${HOME}/.jira/token ]]; then
+    export JIRA_API_TOKEN=`cat ${HOME}/.jira/token`
+fi
+if [[ -f ${HOME}/.github/token ]]; then
+    export GIT_API_TOKEN=`cat ${HOME}/.github/token`
+fi
+
+
 export PATH="${PATH}:${HOME}/bin:${HOME}/.local/bin"
 export PATH="${PATH}:${HOME}/Repo/app/bin"
 
@@ -22,6 +33,8 @@ source ~/.zsh_java_home_cache
 
 export AWS_PROFILE=sre
 export AWS_REGION=us-west-2
+# export ANTHROPIC_MODEL='global.anthropic.claude-opus-4-5-20251101-v1:0'
+# export CLAUDE_CODE_USE_BEDROCK=1
 
 # Cache ngrok completions to a file — avoids ~1.3s eval on every shell startup.
 # Delete the cache file to regenerate: rm ~/.zsh_ngrok_completion
@@ -31,9 +44,6 @@ if command -v ngrok >/dev/null 2>&1 && command -v compdef >/dev/null 2>&1; then
     fi
     source ~/.zsh_ngrok_completion
 fi
-
-export JIRA_API_TOKEN=`cat ${HOME}/.jira/token`
-export GIT_API_TOKEN=`cat ${HOME}/.github/token`
 
 if [[ -e ~/.safe-chain/scripts/init-posix.sh ]]; then
     source ~/.safe-chain/scripts/init-posix.sh
