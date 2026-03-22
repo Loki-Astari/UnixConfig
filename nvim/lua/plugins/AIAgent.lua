@@ -17,6 +17,7 @@ return {
            {'<leader>ax', ':AgentClose<cr>', desc = "Close current agent" },
            {'<leader>at', ':AgentToggle<cr>', desc = "Toggle current agent" },
            {'<leader>as', ':AgentSendSelection<cr>', desc = "Send selection to agent" },
+           {'<leader>ad', ':AgentSendDiagnostics<cr>', desc = "Send Diagnostic to agent" },
        })
    end,
 }
