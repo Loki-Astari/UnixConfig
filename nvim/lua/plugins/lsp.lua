@@ -198,85 +198,23 @@ return {
         --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
         --
 
-        -- Use the local Makefile to get headers required for the CPP LS
-        -- Cache the result to avoid running `make neovimflags` on every startup.
-        -- The cache is invalidated when the Makefile is newer than the cache file.
-        local cache_file = vim.fn.stdpath('cache') .. '/neovimflags_cache_' .. vim.fn.sha256(vim.fn.getcwd())
-        local makefile = vim.fn.getcwd() .. '/Makefile'
-        local output = ''
-
-        local function read_cache()
-            local f = io.open(cache_file, 'r')
-            if f then
-                local content = f:read('*a')
-                f:close()
-                return content
-            end
-            return nil
-        end
-
-        local function write_compile_flags(flags)
-            local flagFile = io.open(cache_file, 'w')
-            if flagFile then
-                flagFile:write("-x\nc++\n")
-                flagFile:write("-I..\n")
-                flagFile:write("-I.\n")
-                for word in flags:gmatch("%S+") do
-                    flagFile:write(word .. '\n')
-                end
-                flagFile:close()
-            end
-        end
-
-        local function build_clangd_cmd(flags)
-            local cmdLine = "-x c++ " .. flags
-            local cmdArray = {'/Library/Developer/CommandLineTools/usr/bin/clangd', '--query-driver=/usr/bin/g++', }
-            for word in string.gmatch(cmdLine, "%S+") do
-                table.insert(cmdArray, "--extra-arg=" .. word)
-            end
-            return cmdArray
-        end
-
-        -- Check if cache is still valid (Makefile hasn't changed)
-        local makefile_stat = vim.uv.fs_stat(makefile)
-        local cache_stat = vim.uv.fs_stat(cache_file)
-        local cache_valid = cache_stat and makefile_stat and cache_stat.mtime.sec >= makefile_stat.mtime.sec
-
-        if cache_valid then
-            output = read_cache() or ''
-        else
-            -- Use stale cache immediately so startup isn't blocked
-            output = read_cache() or ''
-            -- Run `make neovimflags` asynchronously if Makefile exists
-            if makefile_stat then
+        -- Ensure .clangd config exists for clangd to pick up compile flags.
+        -- If missing, run `make .clangd` asynchronously to generate it.
+        local clangd_config = vim.fn.getcwd() .. '/.clangd'
+        if not vim.uv.fs_stat(clangd_config) then
+            local makefile = vim.fn.getcwd() .. '/Makefile'
+            if vim.uv.fs_stat(makefile) then
                 vim.system(
-                    { 'make', 'neovimflags' },
+                    { 'make', '.clangd' },
                     { text = true, cwd = vim.fn.getcwd() },
                     vim.schedule_wrap(function(result)
-                        if result.code == 0 and result.stdout then
-                            local new_output = result.stdout
-                            write_compile_flags(new_output)
-                            -- Restart clangd with updated flags if it's running
+                        if result.code == 0 then
+                            -- Restart clangd so it picks up the new .clangd config
                             local clients = vim.lsp.get_clients({ name = 'clangd' })
                             if #clients > 0 then
-                                local new_cmd = build_clangd_cmd(new_output)
                                 vim.lsp.stop_client(clients)
                                 vim.defer_fn(function()
-                                    require('lspconfig').clangd.setup({
-                                        cmd = new_cmd,
-                                        filetypes = {'c', 'cpp', 'cc', 'mpp', 'ixx', 'tpp'},
-                                    })
-                                    -- Re-attach to open buffers
-                                    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-                                        if vim.api.nvim_buf_is_loaded(buf) then
-                                            local ft = vim.bo[buf].filetype
-                                            if vim.tbl_contains({'c', 'cpp', 'cc', 'mpp', 'ixx', 'tpp'}, ft) then
-                                                vim.api.nvim_buf_call(buf, function()
-                                                    vim.cmd('LspStart clangd')
-                                                end)
-                                            end
-                                        end
-                                    end
+                                    vim.lsp.enable('clangd')
                                 end, 500)
                             end
                         end
@@ -285,7 +223,7 @@ return {
             end
         end
 
-        local cmdArray = build_clangd_cmd(output)
+        local cmdArray = {vim.fn.exepath('clangd'), '--query-driver=/usr/bin/g++'}
         local servers = {
             -- gopls = {},
             -- pyright = {},
@@ -373,19 +311,16 @@ return {
             end,
         })
 
+        -- Configure each LSP server using the new vim.lsp.config API (nvim 0.11+)
+        for server_name, server in pairs(servers) do
+            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            vim.lsp.config(server_name, server)
+        end
+        vim.lsp.enable(vim.tbl_keys(servers))
+
         require('mason-lspconfig').setup {
-            ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
+            ensure_installed = {},
             automatic_installation = false,
-            handlers = {
-                function(server_name)
-                    local server = servers[server_name] or {}
-                    -- This handles overriding only values explicitly passed
-                    -- by the server configuration above. Useful when disabling
-                    -- certain features of an LSP (for example, turning off formatting for ts_ls)
-                    server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-                    require('lspconfig')[server_name].setup(server)
-                end,
-            },
         }
     end,
 }

@@ -8,7 +8,7 @@ return {
         local plugins = require('lazy').plugins()
         for index, plugin in pairs(plugins) do
             if (plugin.whichkey ~= nil and type(plugin.whichkey) == "function") then
-                vim.notify("Which Key: Installing: " ..plugin[1], vim.log.levels.INFO, {title = plugin[1]})
+                -- vim.notify("Which Key: Installing: " ..plugin[1], vim.log.levels.INFO, {title = plugin[1]})
                 plugin.whichkey(wk)
             end
         end
