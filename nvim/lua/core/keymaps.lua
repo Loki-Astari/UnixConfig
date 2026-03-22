@@ -65,6 +65,9 @@ vim.keymap.set('n', 'Z',        'dp]c', opts)
 --  useful for C++ code.
 vim.cmd([[map C maviw:s_\v(/\*)=(%V\w*)(\*/)=_\=strpart("/*", strlen(submatch(1))).submatch(2).strpart("*/", strlen(submatch(3)))_<CR>`a]])
 
+-- Open quickfix window (shows :make errors)
+vim.keymap.set('n', '<leader>E', '<cmd>copen<CR>', { noremap = true, silent = true, desc = 'Open quickfix (errors)' })
+
 -- Reload config (core files only - plugins require restart)
 vim.keymap.set('n', '<leader>rr', function()
     dofile(vim.fn.stdpath('config') .. '/lua/core/options.lua')
