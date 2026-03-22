@@ -65,7 +65,10 @@ return {
                     'diagnostics',
                 },
                 lualine_c = {'filename'},
-                lualine_x = {'encoding', 'filetype'},
+                lualine_x = {
+                    { function() return require('aiagent').lualine_mcp() end, color = function() return require('aiagent').lualine_mcp_color() end },
+                    'encoding', 'filetype',
+                },
                 lualine_y = {'progress'},
                 lualine_z = {'location'}
             },
