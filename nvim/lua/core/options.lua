@@ -31,6 +31,9 @@ vim.opt.scrolloff = 15
 vim.wo.number = true                    -- Line Numbers
 --vim.o.relativenumber = true
 
+-- Use vim-bbye's Bdelete instead of built-in bdelete to avoid closing windows
+vim.cmd("cabbrev bd Bdelete")
+
 -- Line Wrapping
 vim.o.wrap = false                      -- don't wrap lines of code
 vim.o.linebreak = true
@@ -100,6 +103,35 @@ end))
 
 --
 vim.opt.makeprg = "NEOVIM=TRUE make"
+
+-- errorformat for C/C++ compiler errors + Google Test failures
+-- Order matters: first match wins.
+vim.opt.errorformat = table.concat({
+  -- 1) Standard C/C++ compiler errors/warnings: file:line:col: type: message
+  '%f:%l:%c: %t%*[^:]: %m',
+  '%f:%l: %t%*[^:]: %m',
+
+  -- 2) Google Test failure location: file:line: Failure
+  '%E%f:%l: Failure',
+  '%E%f:%l: Value of: %m',
+  '%C  Actual: %m',
+  '%C  Expected: %m',
+  '%CExpected %m',
+  '%C  Which is: %m',
+  '%Z[  FAILED  ] %m',
+
+  -- 3) Linker errors (ld)
+  '%f:%l: %m',
+
+  -- 4) Ignore everything else: gtest OK lines, timestamps, build chatter
+  '%-G[       OK ] %.%#',
+  '%-G[----------] %.%#',
+  '%-G[==========] %.%#',
+  '%-G[  PASSED  ] %.%#',
+  '%-G[ RUN      ] %.%#',
+  '%-G%\\d%\\d%\\d%\\d-%\\d%\\d-%\\d%\\d %.%#',
+  '%-G%.%#',
+}, ',')
 
 -- Auto-reload config files when saved
 -- Note: Plugin files won't fully reload (lazy.nvim manages those)
