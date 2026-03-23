@@ -274,6 +274,8 @@ return {
                 },
             },
 
+            clojure_lsp = {},
+
             clangd = {
                 capabilities = capabilities.clangd,
                 -- cmd = {'/Library/Developer/CommandLineTools/usr/bin/clangd',},

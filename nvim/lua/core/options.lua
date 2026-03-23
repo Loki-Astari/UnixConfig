@@ -102,7 +102,7 @@ reload_timer:start(1000, 1000, vim.schedule_wrap(function()
 end))
 
 --
-vim.opt.makeprg = "NEOVIM=TRUE make"
+vim.opt.makeprg = "DISBALE_CONTROL_CODES=TRUE make"
 
 -- errorformat for C/C++ compiler errors + Google Test failures
 -- Order matters: first match wins.
