@@ -2,4 +2,4 @@
 
 target=${1-debug}
 
-DISBALE_CONTROL_CODES=TRUE make ${target}
+DISABLE_CONTROL_CODES=TRUE make ${target}
