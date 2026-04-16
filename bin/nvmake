@@ -1,0 +1,5 @@
+#!/bin/bash
+
+target=${1-debug}
+
+DISBALE_CONTROL_CODES=TRUE make ${target}
