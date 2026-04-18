@@ -1,0 +1,3 @@
+#!/bin/bash
+
+grep -r $1 | awk -F: '{print $1}' | uniq 

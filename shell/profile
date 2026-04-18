@@ -30,6 +30,7 @@ alias version="lsb_release -a"
 #alias ctags="ctags --langmap=ObjectiveC:.mm.h"
 alias hd="od -t x1 -t c"
 alias atool='autoreconf --install'
+alias mkproj='bash <(curl -fsSL https://raw.githubusercontent.com/Loki-Astari/ThorMaker/master/autotools/init)'
 
 if [[ "$OSTYPE" == darwin* ]]; then
     export JAVA_HOME="$(/usr/libexec/java_home 2>/dev/null || echo /usr)"

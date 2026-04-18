@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rm -rf `find . -name buildmeta`
+kill -9 `ps | grep buildmeta | grep -v grep | awk '{print $1}'`
