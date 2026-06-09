@@ -18,7 +18,10 @@ return {
            {'<leader>at', ':AgentToggle<cr>', desc = "Toggle current agent" },
            {'<leader>as', ':AgentSendSelection<cr>', desc = "Send selection to agent" },
            {'<leader>ad', ':AgentSendDiagnostics<cr>', desc = "Send Diagnostic to agent" },
-       })
+        })
+        wk.add({
+           {'<leader>sc', ':set ic!<CR>',   desc = 'Toggle case sensative search'}
+        })
    end,
 }
 

@@ -49,10 +49,16 @@ require('lazy').setup({
     require('plugins.autocomplete'),
     require('plugins.gitsigns'),
     require('plugins.whichkey'),
-    require('plugins.commands'),
     require('plugins.clojure'),
     -- AI Tools
     require('plugins.AIAgent'),
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'markdown',
+    callback = function()
+        vim.cmd('iabbrev <buffer> -- —')
+    end,
 })
 
 
