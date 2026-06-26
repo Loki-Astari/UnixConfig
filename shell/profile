@@ -43,3 +43,4 @@ if [[ "$0" == -* ]] && [ -f ~/.git-completion.bash ]; then
   source ~/.git-completion.bash
 fi
 
+export DEV_ROOT=${HOME}/Repo/ThorsAnvil/build

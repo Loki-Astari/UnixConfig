@@ -18,6 +18,7 @@ return {
            {'<leader>at', ':AgentToggle<cr>', desc = "Toggle current agent" },
            {'<leader>as', ':AgentSendSelection<cr>', desc = "Send selection to agent" },
            {'<leader>ad', ':AgentSendDiagnostics<cr>', desc = "Send Diagnostic to agent" },
+           {'<leader>a ', ':AgentSessions<cr>', desc = "Open the Agent Session Selector"},
            {'<leader>aD', ':AgentDiff<cr>', desc = "Open the Agent Diff Viewer"},
         })
         wk.add({
