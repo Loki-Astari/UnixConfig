@@ -50,6 +50,7 @@ require('lazy').setup({
     require('plugins.gitsigns'),
     require('plugins.whichkey'),
     require('plugins.clojure'),
+    require('plugins.core-keymaps'),
     -- AI Tools
     require('plugins.AIAgent'),
 })
