@@ -1,3 +1,41 @@
+local function show_keybindings()
+    local path = vim.fn.stdpath('config') .. '/doc/keybindings.md'
+    local lines = vim.fn.readfile(path)
+    if #lines == 0 then
+        vim.notify('Keybindings doc not found', vim.log.levels.WARN)
+        return
+    end
+
+    local width = math.floor(vim.o.columns * 0.8)
+    local height = math.floor(vim.o.lines * 0.8)
+    local row = math.floor((vim.o.lines - height) / 2)
+    local col = math.floor((vim.o.columns - width) / 2)
+
+    local buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+    vim.bo[buf].modifiable = false
+    vim.bo[buf].filetype = 'markdown'
+
+    local win = vim.api.nvim_open_win(buf, true, {
+        relative = 'editor',
+        width = width,
+        height = height,
+        row = row,
+        col = col,
+        style = 'minimal',
+        border = 'rounded',
+        title = ' Keybindings ',
+        title_pos = 'center',
+    })
+
+    vim.keymap.set('n', 'q', function()
+        vim.api.nvim_win_close(win, true)
+    end, { buffer = buf, nowait = true })
+    vim.keymap.set('n', '<Esc>', function()
+        vim.api.nvim_win_close(win, true)
+    end, { buffer = buf, nowait = true })
+end
+
 local copy_mode = {
     active = false,
     saved_number = nil,
@@ -57,7 +95,7 @@ return {
     whichkey = function(wk)
         wk.add({
             -- Buffer jump by position
-            {'<leader>o', group = "Switch Buffer"},
+            {'<leader>0', group = "Switch Buffer"},
             {'<leader>01', '<cmd>BufferLineGoToBuffer 1<CR>',  desc = 'Buffer 1'},
             {'<leader>02', '<cmd>BufferLineGoToBuffer 2<CR>',  desc = 'Buffer 2'},
             {'<leader>03', '<cmd>BufferLineGoToBuffer 3<CR>',  desc = 'Buffer 3'},
@@ -83,6 +121,8 @@ return {
 
             -- Config reload
             {'<leader>r',  group = 'Config'},
+            {'<leader>K', show_keybindings, desc = 'Show Keybindings'},
+
             {'<leader>rr', function()
                 dofile(vim.fn.stdpath('config') .. '/lua/core/options.lua')
                 dofile(vim.fn.stdpath('config') .. '/lua/core/keymaps.lua')

@@ -8,3 +8,4 @@ gtk-2.0/
 nvim.*
 compile_flags.txt
 lazy-lock.json
+.prompt-history
