@@ -3,6 +3,7 @@ vim.loader.enable()
 
 require 'core.options'
 require 'core.keymaps'
+require 'core.title'
 
 vim.opt.runtimepath:prepend("/Users/myork/Repo/Claude")
 
