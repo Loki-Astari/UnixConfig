@@ -1,16 +1,39 @@
-
 -- https://github.com/catppuccin/nvim
+
+-- Which flavour to use for each background. Changing these changes both what
+-- loads at startup and what <leader>tt toggles between.
+local flavours = {
+    light = "latte",
+    dark  = "frappe",
+}
+
+-- Cursor and whitespace colours have to contrast with the background, so they
+-- cannot be hard coded. A colorscheme change also wipes any highlight set here,
+-- so this is re-applied from a ColorScheme autocmd rather than called once.
+local function apply_background_overrides()
+    local dark = vim.o.background == "dark"
+
+    -- The cursor was black on iTerm2 on the mac.
+    -- Need to make the cursor contrast with the background.
+    local cursor = dark and "white" or "black"
+    vim.api.nvim_set_hl(0, "nCursor", {fg = dark and "black" or "white", bg = cursor})
+    vim.api.nvim_set_hl(0, "iCursor", {fg = cursor, bg = cursor})
+    vim.o.guicursor = "n-v-c:block-nCursor,i:ver100-iCursor,r-cr:hor20,o:hor50"
+
+    -- Make tabs and trailing spaces stand out.
+    local whitespace = dark and "#FFFFFF" or "#000000"
+    vim.api.nvim_set_hl(0, "NonText",    {fg = whitespace})
+    vim.api.nvim_set_hl(0, "Whitespace", {fg = whitespace})
+end
+
 return {
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
     config = function()
         require("catppuccin").setup({
-            flavour = "frappe", -- latte, frappe, macchiato, mocha
-            background = { -- :h background
-                light = "latte",
-                dark = "mocha",
-            },
+            flavour = "auto", -- latte, frappe, macchiato, mocha, auto (follows vim.o.background)
+            background = flavours, -- :h background
             transparent_background = false, -- disables setting the background color.
             float = {
                 transparent = false, -- enable transparent floating windows
@@ -59,18 +82,25 @@ return {
             },
         })
 
-        -- Turn on the colour scheme
+        -- Registered before the colorscheme loads, so the initial load applies it too.
+        vim.api.nvim_create_autocmd("ColorScheme", {
+            group = vim.api.nvim_create_augroup("CatppuccinBackgroundOverrides", { clear = true }),
+            callback = apply_background_overrides,
+            desc = 'Keep cursor and whitespace colours readable on both backgrounds',
+        })
+
+        -- Turn on the colour scheme (flavour picked from vim.o.background).
         vim.cmd("colorscheme catppuccin")
-
-        -- The cursor was black on iTerm2 on the mac.
-        -- Need to make the cursor white.
-        vim.api.nvim_set_hl(0, "nCursor", {fg = "black", bg = "white"})
-        vim.api.nvim_set_hl(0, "iCursor", {fg = "white", bg = "white"})
-        vim.o.guicursor = "n-v-c:block-nCursor,i:ver100-iCursor,r-cr:hor20,o:hor50"
-
-        -- Make tabs and trailing spaces stand out.
-        vim.cmd("highlight NonText guifg=#FFFFFF")
-        vim.cmd("highlight Whitespace guifg=#FFFFFF")
+    end,
+    whichkey = function(wk)
+        wk.add({
+            -- Theme (<leader>t "Toggle" group is declared in gitsigns.lua)
+            {'<leader>tt', function()
+                local target = vim.o.background == "dark" and "light" or "dark"
+                -- Loading the flavour by name also sets vim.o.background to match.
+                vim.cmd("colorscheme catppuccin-" .. flavours[target])
+                vim.notify("Theme: " .. target .. " (" .. flavours[target] .. ")", vim.log.levels.INFO)
+            end, desc = 'Toggle Light/Dark Theme'},
+        })
     end,
 }
-
