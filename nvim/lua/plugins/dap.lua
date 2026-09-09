@@ -355,20 +355,37 @@ function H.debug_app()
     local dap = require('dap')
     local root = H.component_root()
 
-    local programs = {}
-    for _, mode in ipairs({ 'debug', 'release' }) do
-        for _, prog in ipairs(vim.fn.glob(root .. '/' .. mode .. '/*.prog', false, true)) do
-            table.insert(programs, prog)
+    -- Look in the ThorMaker output directories, the component itself, the
+    -- directory of the current file, and the working directory -- a plain
+    -- `g++ -g -o prog main.cpp` binary is as valid a target as a *.prog.
+    local dirs, seen_dir = {}, {}
+    local function add_dir(d)
+        if d and d ~= '' and not seen_dir[d] and exists(d) then
+            seen_dir[d] = true
+            table.insert(dirs, d)
         end
     end
-    -- Anything executable sitting directly in the component directory.
-    for _, prog in ipairs(vim.fn.glob(root .. '/*.prog', false, true)) do
-        table.insert(programs, prog)
-    end
+    add_dir(root)
+    add_dir(root .. '/debug')
+    add_dir(root .. '/release')
+    add_dir(vim.fn.expand('%:p:h'))
+    add_dir(vim.fn.getcwd())
 
-    if #programs == 0 then
-        return notify('No *.prog found under ' .. root .. ' -- run `make` first.', vim.log.levels.WARN)
+    local programs, seen = {}, {}
+    for _, dir in ipairs(dirs) do
+        for name, kind in vim.fs.dir(dir) do
+            local path = dir .. '/' .. name
+            local ext = name:match('%.([^.]+)$')
+            -- A compiled binary is either a ThorMaker *.prog or, conventionally,
+            -- extensionless. Anything else here is a source or an object file.
+            if (kind == 'file' or kind == 'link') and (ext == 'prog' or ext == nil)
+                    and not seen[path] and vim.fn.executable(path) == 1 then
+                seen[path] = true
+                table.insert(programs, path)
+            end
+        end
     end
+    table.sort(programs)
 
     local function launch(program)
         if H.breakpoint_count() == 0 then
@@ -392,6 +409,17 @@ function H.debug_app()
         end)
     end
 
+    if #programs == 0 then
+        local typed = vim.fn.input({
+            prompt = 'No executable found. Path: ',
+            default = root .. '/',
+            completion = 'file',
+        })
+        if typed == nil or vim.trim(typed) == '' then
+            return
+        end
+        return launch(vim.fn.fnamemodify(vim.trim(typed), ':p'))
+    end
     if #programs == 1 then
         return launch(programs[1])
     end
