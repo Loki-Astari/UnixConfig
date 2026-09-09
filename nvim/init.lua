@@ -52,6 +52,7 @@ require('lazy').setup({
     require('plugins.whichkey'),
     require('plugins.clojure'),
     require('plugins.core-keymaps'),
+    require('plugins.dap'),
     -- AI Tools
     require('plugins.AIAgent'),
 })
