@@ -23,6 +23,7 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 alias vi=nvim
+alias via="nvim -c AgentOnly"
 alias gd="git difftool --no-prompt --tool=vimdiff"
 alias sync="sudo ntpdate pool.ntp.org"
 alias netsync="sudo /etc/init.d/networking restart"
