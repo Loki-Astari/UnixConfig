@@ -163,6 +163,12 @@ vim.opt.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,winpos'
 -- Auto-save session on exit (per directory)
 vim.api.nvim_create_autocmd('VimLeavePre', {
     callback = function()
+        -- Never let a `vig` review overwrite the real session for this
+        -- directory: its only buffer is a scratch pull request view, so
+        -- saving would replace a workspace with nothing worth restoring.
+        if vim.env.GAUNTLET_PRELOAD then
+            return
+        end
         local session_dir = vim.fn.stdpath('state') .. '/sessions'
         vim.fn.mkdir(session_dir, 'p')
         local cwd = vim.fn.getcwd():gsub('/', '_')
@@ -176,6 +182,12 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
 vim.api.nvim_create_autocmd('VimEnter', {
     nested = true,
     callback = function()
+        -- gauntlet.nvim's `vig` starts Neovim purely to show a pull request
+        -- review, and starts it with no arguments, so it would otherwise get
+        -- the session restored over the top of it.  Leave it alone.
+        if vim.env.GAUNTLET_PRELOAD then
+            return
+        end
         if vim.fn.argc() == 0 then
             local session_dir = vim.fn.stdpath('state') .. '/sessions'
             local cwd = vim.fn.getcwd():gsub('/', '_')
