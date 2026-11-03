@@ -73,7 +73,7 @@ return {
                     delay = 200,
                     reveal = {'close'}
                 },
-                sort_by = "insert_after_current",
+                sort_by = "id",                     -- keep tabs in buffer-number order (matches :bnext / <Tab>)
                 --[[
                     'insert_after_current' |'insert_at_end' | 'id' | 'extension' | 'relative_directory' | 'directory' | 'tabs' | function(buffer_a, buffer_b)
                     -- add custom logic

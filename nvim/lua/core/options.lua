@@ -200,3 +200,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
     desc = 'Auto-load session on startup',
 })
 
+
+-- Fix the ":w1" typo (meant ":w!") which would otherwise write the buffer to a file named "1".
+-- Only expands when "w1" is the entire ':' command line, so other commands are unaffected.
+vim.cmd([[cnoreabbrev <expr> w1 (getcmdtype() ==# ':' && getcmdline() ==# 'w1') ? 'w!' : 'w1']])
