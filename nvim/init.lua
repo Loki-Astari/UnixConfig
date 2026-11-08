@@ -54,6 +54,7 @@ require('lazy').setup({
     require('plugins.core-keymaps'),
     require('plugins.dap'),
     require('plugins.gauntlet'),
+    require('plugins.diagram'),
     -- AI Tools
     require('plugins.AIAgent'),
 })

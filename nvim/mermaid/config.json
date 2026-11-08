@@ -1,0 +1,46 @@
+{
+  "theme": "base",
+  "themeVariables": {
+    "darkMode": true,
+    "background": "#303446",
+    "fontFamily": "Helvetica Neue, Helvetica, Arial, sans-serif",
+    "fontSize": "18px",
+
+    "primaryColor": "#414559",
+    "primaryTextColor": "#c6d0f5",
+    "primaryBorderColor": "#8caaee",
+    "secondaryColor": "#51576d",
+    "secondaryTextColor": "#c6d0f5",
+    "secondaryBorderColor": "#ca9ee6",
+    "tertiaryColor": "#292c3c",
+    "tertiaryTextColor": "#c6d0f5",
+    "tertiaryBorderColor": "#81c8be",
+
+    "lineColor": "#babbf1",
+    "textColor": "#c6d0f5",
+    "mainBkg": "#414559",
+    "nodeBorder": "#8caaee",
+    "clusterBkg": "#292c3c",
+    "clusterBorder": "#737994",
+    "edgeLabelBackground": "#303446",
+    "titleColor": "#c6d0f5",
+
+    "actorBkg": "#414559",
+    "actorBorder": "#8caaee",
+    "actorTextColor": "#c6d0f5",
+    "actorLineColor": "#babbf1",
+    "signalColor": "#babbf1",
+    "signalTextColor": "#c6d0f5",
+    "noteBkgColor": "#51576d",
+    "noteTextColor": "#c6d0f5",
+    "noteBorderColor": "#e5c890"
+  },
+  "flowchart": {
+    "curve": "basis",
+    "padding": 20,
+    "nodeSpacing": 50,
+    "rankSpacing": 60,
+    "htmlLabels": true
+  },
+  "themeCSS": ".flowchart-link, .edgePath .path, .relation, .messageLine0, .messageLine1, .transition { stroke-width: 3.5px !important; } marker path, .arrowheadPath, .arrowMarkerPath { stroke-width: 1px !important; } .node rect, .node polygon, .node circle, .node path { stroke-width: 2.5px !important; rx: 8px; ry: 8px; } .edgeLabel, .edgeLabel rect, .labelBkg { background-color: #303446 !important; fill: #303446 !important; } .edgeLabel { color: #e5c890 !important; }"
+}
